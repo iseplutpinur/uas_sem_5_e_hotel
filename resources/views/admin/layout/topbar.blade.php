@@ -78,7 +78,7 @@
                     Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a role="button" class="dropdown-item btn-logout">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
                 </a>
@@ -86,3 +86,28 @@
         </li>
     </ul>
 </nav>
+
+@push('scripts')
+    <script type="text/javascript">
+        $('.btn-logout').click(function() {
+            Swal.fire({
+                icon: 'question',
+                title: 'Are you sure want to logout?',
+                confirmButtonColor: '#4e73df',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                showCancelButton: true
+            }).then(function(res) {
+                if (res.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Logout success!',
+                        confirmButtonColor: '#4e73df'
+                    }).then(function() {
+                        window.location.replace('{{ route('admin.logout') }}');
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

@@ -24,14 +24,14 @@
         Authorization
     </div>
     <!-- auth -->
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('admin/group-user-admin*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuth" aria-expanded="true" aria-controls="collapseAuth">
             <i class="fas fa-fw fa-users-cog"></i>
             <span>Auth</span>
         </a>
-        <div id="collapseAuth" class="collapse" data-parent="#accordionSidebar">
+        <div id="collapseAuth" class="collapse {{ Request::is('admin/group-user-admin*') ? 'show' : '' }}" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#"><i class="fas fa-users mr-2"></i>Group User Admin</a>
+                <a class="collapse-item {{ Request::is('admin/group-user-admin*') ? 'active' : '' }}" href="{{ route('admin.group-user-admin') }}"><i class="fas fa-users mr-2"></i>Group User Admin</a>
                 <a class="collapse-item" href="#"><i class="fas fa-user mr-2"></i>User Admin</a>
             </div>
         </div>

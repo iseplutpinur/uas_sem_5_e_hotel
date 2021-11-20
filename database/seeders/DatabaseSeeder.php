@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\GroupUser;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +24,10 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
             'is_admin' => true,
             'group_id' => '1'
+        ]);
+
+        GroupUser::create([
+            'name' => 'Master'
         ]);
     }
 }
