@@ -1,5 +1,15 @@
 <?php
 
+
+
+
+
+
+
+
+
+
+
 namespace Composer;
 
 use Composer\Semver\VersionParser;
@@ -14,12 +24,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => 'v8.6.7',
-    'version' => '8.6.7.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => 'bfa6a6262ed7bdaf1ba8c59e23265004785b8ecd',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -426,6 +436,15 @@ private static $installed = array (
         0 => 'v8.72.0',
       ),
     ),
+    'itsgoingd/clockwork' => 
+    array (
+      'pretty_version' => 'v5.1.1',
+      'version' => '5.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2daf30fa6dfc5a1ccfdb2142df59243a72c473d8',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -444,12 +463,12 @@ private static $installed = array (
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => 'v8.6.7',
-      'version' => '8.6.7.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => 'bfa6a6262ed7bdaf1ba8c59e23265004785b8ecd',
     ),
     'laravel/sail' => 
     array (
@@ -825,8 +844,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0|2.0',
-        1 => '1.0.0 || 2.0.0 || 3.0.0',
+        0 => '1.0.0 || 2.0.0 || 3.0.0',
+        1 => '1.0|2.0',
       ),
     ),
     'psr/simple-cache' => 

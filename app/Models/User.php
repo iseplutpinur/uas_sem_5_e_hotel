@@ -45,4 +45,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $with = ['group'];
+
+    public function group()
+    {
+        return $this->belongsTo(GroupUser::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) use ($filters) {
+            return $query->where($filters['search_by'], 'like', '%' . $search . '%');
+        });
+    }
 }
