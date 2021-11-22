@@ -16,7 +16,7 @@
                     <tr>
                         <td>
                             @if ($user->photo)
-                                <img src="{{ asset('images/default.png') }}" style="width: 100px;height: 100px;;object-fit: cover" class="border">
+                                <img src="{{ asset('images/users-photo/' . $user->photo) }}" style="width: 100px;height: 100px;;object-fit: cover" class="border">
                             @else
                                 <img src="{{ asset('images/default.png') }}" style="width: 100px;height: 100px;;object-fit: cover" class="border">
                             @endif

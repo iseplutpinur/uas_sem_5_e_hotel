@@ -5,6 +5,7 @@
         <h1 class="h3 mb-4 text-gray-800">Add User Admin</h1>
 
         <form class="form-input">
+            @csrf
             <div class="row">
                 <div class="col-md-2">
                     <div class="card shadow">
@@ -71,4 +72,56 @@
             </div>
         </form>
     </div>
+
+    @push('scripts')
+        <script type="text/javascript">
+            $('.form-input').submit(function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure to save this data?',
+                    showCancelButton: true,
+                    confirmButtonColor: '#409AC7',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        var formData = new FormData(this);
+                        $.ajax({
+                            url: "{{ route('admin.user-admin.store') }}",
+                            method: "POST",
+                            data: formData,
+                            beforeSend: function(e) {},
+                            complete: function(e) {},
+                            success: function(res) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: res.message,
+                                    confirmButtonColor: '#409AC7'
+                                }).then(function() {
+                                    $('.form-input')[0].reset();
+                                });
+                            },
+                            error: function(res) {
+                                $.each(res.responseJSON.errors, function(id, error) {
+                                    toastr['error'](error);
+                                });
+                            },
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        });
+                    }
+                });
+            });
+
+            $('input[name="photo"]').change(function() {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('.img-preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+        </script>
+    @endpush
 @endsection
