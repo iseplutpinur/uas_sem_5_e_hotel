@@ -37,14 +37,14 @@
         </div>
     </li>
     <!-- setting -->
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('admin/authorization-setting*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSetting" aria-expanded="true" aria-controls="collapseSetting">
             <i class="fas fa-fw fa-cog"></i>
             <span>Setting</span>
         </a>
-        <div id="collapseSetting" class="collapse" data-parent="#accordionSidebar">
+        <div id="collapseSetting" class="collapse {{ Request::is('admin/authorization-setting*') ? 'show' : '' }}" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#"><i class="fas fa-cogs mr-2"></i>Authorization Setting</a>
+                <a class="collapse-item {{ Request::is('admin/authorization-setting*') ? 'active' : '' }}" href="{{ route('admin.authorization-setting') }}"><i class="fas fa-cogs mr-2"></i>Authorization Setting</a>
             </div>
         </div>
     </li>

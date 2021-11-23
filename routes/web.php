@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminAuthorizationSettingController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminGroupUserController;
 use App\Http\Controllers\AdminUserController;
@@ -48,4 +49,14 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::post('/admin/user-admin/update', [AdminUserController::class, 'update'])->name('admin.user-admin.update');
     Route::post('/admin/user-admin/update-password', [AdminUserController::class, 'update_password'])->name('admin.user-admin.update-password');
     Route::delete('/admin/user-admin/delete/{id}', [AdminUserController::class, 'delete'])->name('admin.user-admin.delete');
+
+    Route::get('/admin/authorization-setting', [AdminAuthorizationSettingController::class, 'index'])->name('admin.authorization-setting');
+    Route::post('/admin/authorization-setting', [AdminAuthorizationSettingController::class, 'table']);
+    Route::post('/admin/authorization-setting/update', [AdminAuthorizationSettingController::class, 'update'])->name('admin.authorization-setting.update');
+
+    Route::get('/admin/error-401', function () {
+        return view('admin.error-401', [
+            'title' => 'Error 401'
+        ]);
+    })->name('admin.error-401');
 });

@@ -9,6 +9,12 @@ class GroupUser extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $casts = [
+        '1_1' => 'boolean',
+        '1_2' => 'boolean',
+        '1_3' => 'boolean',
+        '1_4' => 'boolean'
+    ];
 
     public function scopeFilter($query, array $filters)
     {
