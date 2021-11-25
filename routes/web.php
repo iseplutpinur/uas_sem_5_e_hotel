@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminAuthorizationSettingController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminGroupUserController;
+use App\Http\Controllers\AdminRoomCategoryController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,16 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/authorization-setting', [AdminAuthorizationSettingController::class, 'index'])->name('admin.authorization-setting');
     Route::post('/admin/authorization-setting', [AdminAuthorizationSettingController::class, 'table']);
     Route::post('/admin/authorization-setting/update', [AdminAuthorizationSettingController::class, 'update'])->name('admin.authorization-setting.update');
+
+    Route::get('/admin/room-category', [AdminRoomCategoryController::class, 'index'])->name('admin.room-category');
+    Route::post('/admin/room-category', [AdminRoomCategoryController::class, 'table']);
+    Route::get('/admin/room-category/add', [AdminRoomCategoryController::class, 'add'])->name('admin.room-category.add');
+    Route::post('/admin/room-category/store', [AdminRoomCategoryController::class, 'store'])->name('admin.room-category.store');
+    Route::get('/admin/room-category/edit/{id}', [AdminRoomCategoryController::class, 'edit'])->name('admin.room-category.edit');
+    Route::get('/admin/room-category/detail/{id}', [AdminRoomCategoryController::class, 'detail'])->name('admin.room-category.detail');
+    Route::delete('/admin/room-category/delete/{id}', [AdminRoomCategoryController::class, 'delete'])->name('admin.room-category.delete');
+
+    Route::get('/admin/room', [])->name('admin.room');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [

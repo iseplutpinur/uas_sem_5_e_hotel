@@ -51,10 +51,23 @@
 
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
+    <!-- master data -->
     <div class="sidebar-heading">
-        Addons
+        Master Data
     </div>
+    <!-- room -->
+    <li class="nav-item {{ Request::is('admin/room-category*') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoom" aria-expanded="true" aria-controls="collapseRoom">
+            <i class="fas fa-fw fa-bed"></i>
+            <span>Room</span>
+        </a>
+        <div id="collapseRoom" class="collapse {{ Request::is('admin/room-category*', 'admin/room') ? 'show' : '' }}" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::is('admin/room-category*') ? 'active' : '' }}" href="{{ route('admin.room-category') }}"><i class="fas fa-bed mr-2"></i>Room Category</a>
+                <a class="collapse-item {{ Request::is('admin/room') ? 'active' : '' }}" href="{{ route('admin.room') }}"><i class="fas fa-bed mr-2"></i>Room</a>
+            </div>
+        </div>
+    </li>
 
     <!-- divider -->
     <hr class="sidebar-divider d-none d-md-block">
