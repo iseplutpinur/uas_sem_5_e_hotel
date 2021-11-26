@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RoomCategory;
+use App\Models\RoomCategoryImage;
 use Illuminate\Http\Request;
 
 class AdminRoomCategoryController extends Controller
@@ -49,5 +50,21 @@ class AdminRoomCategoryController extends Controller
             'title' => 'Edit Room Category',
             'room_category' => RoomCategory::find($id)
         ]);
+    }
+
+    public function image($id)
+    {
+        return view('admin.room-category.image', [
+            'title' => 'Image Room Category',
+            'room_category' => RoomCategory::find($id)
+        ]);
+    }
+
+    public function images(Request $request)
+    {
+        $response = view('admin.room-category.images', [
+            'room_category_images' => RoomCategoryImage::where('room_category_id', $request->id)->get()
+        ])->render();
+        return response()->json($response);
     }
 }

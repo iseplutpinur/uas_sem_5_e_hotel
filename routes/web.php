@@ -60,6 +60,8 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/room-category/add', [AdminRoomCategoryController::class, 'add'])->name('admin.room-category.add');
     Route::post('/admin/room-category/store', [AdminRoomCategoryController::class, 'store'])->name('admin.room-category.store');
     Route::get('/admin/room-category/edit/{id}', [AdminRoomCategoryController::class, 'edit'])->name('admin.room-category.edit');
+    Route::get('/admin/room-category/image/{id}', [AdminRoomCategoryController::class, 'image'])->name('admin.room-category.image');
+    Route::post('/admin/room-category/images', [AdminRoomCategoryController::class, 'images'])->name('admin.room-category.images');
     Route::get('/admin/room-category/detail/{id}', [AdminRoomCategoryController::class, 'detail'])->name('admin.room-category.detail');
     Route::delete('/admin/room-category/delete/{id}', [AdminRoomCategoryController::class, 'delete'])->name('admin.room-category.delete');
 

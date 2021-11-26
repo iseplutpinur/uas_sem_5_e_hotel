@@ -6,10 +6,10 @@
 
         <ul class="nav nav-pills mb-3">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Information</a>
+                <a class="nav-link active" href="{{ route('admin.room-category.edit', ['id' => $room_category->id]) }}">Information</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Images</a>
+                <a class="nav-link" href="{{ route('admin.room-category.image', ['id' => $room_category->id]) }}">Images</a>
             </li>
         </ul>
 
