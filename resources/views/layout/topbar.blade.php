@@ -8,12 +8,26 @@
             <div class="me-auto"></div>
             <span class="navbar-text">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
-                    </li>
+                    @if (Auth::user())
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ Auth::user()->name }}</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Transaction History</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a role="button" class="dropdown-item btn-logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                        </li>
+                    @endif
                 </ul>
             </span>
         </div>

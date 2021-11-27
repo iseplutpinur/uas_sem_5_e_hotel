@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('admin-content')
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Room Category</h1>
+        <h1 class="h3 mb-4 text-gray-800">Room</h1>
 
         <div class="card shadow">
             <div class="card-header">
@@ -10,9 +10,20 @@
                     <div class="col-md-7">
                         <form class="form-search">
                             @csrf
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Room Category</span>
+                                </div>
+                                <select class="form-control" name="room_category">
+                                    <option value="">Select room category</option>
+                                    @foreach ($room_categories as $room_category)
+                                        <option value="{{ $room_category->id }}">{{ $room_category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="input-group">
                                 <select class="form-control" name="search_by">
-                                    <option value="name">Name</option>
+                                    <option value="number">Room Number</option>
                                 </select>
                                 <input type="text" class="form-control" placeholder="Search..." name="search">
                                 <div class="input-group-append">
@@ -22,7 +33,7 @@
                         </form>
                     </div>
                     <div class="col-md-5" align="right">
-                        <a href="{{ route('admin.room-category.add') }}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+                        <a href="{{ route('admin.room.add') }}" class="btn btn-success"><i class="fas fa-plus"></i></a>
                         <button class="btn btn-primary" onclick="loadTable()"><i class="fas fa-redo"></i></button>
                     </div>
                 </div>
@@ -38,7 +49,7 @@
             loadTable()
 
             function loadTable(page) {
-                var url = "{{ route('admin.room-category') }}";
+                var url = "{{ route('admin.room') }}";
                 if (page != "") {
                     url += "?page=" + page;
                 }
@@ -74,7 +85,7 @@
                 }).then((res) => {
                     if (res.isConfirmed) {
                         var id = $(this).data('id');
-                        var url = "{{ route('admin.room-category.delete', ':id') }}";
+                        var url = "{{ route('admin.room.delete', ':id') }}";
                         url = url.replace(':id', id);
                         $.ajax({
                             url: url,

@@ -10,6 +10,9 @@
     <!-- css -->
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/css/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/swiper/css/swiper-bundle.min.css') }}">
 </head>
 
 <body>
@@ -35,6 +38,12 @@
                         </div>
                         <div class="mb-3">
                             <input type="password" class="form-control" placeholder="Password" name="password">
+                        </div>
+                        <div class="mb-3">
+                            <div class="custom-control custom-checkbox small">
+                                <input type="checkbox" class="custom-control-input" id="rememberCheck" name="remember_me">
+                                <label class="custom-control-label" for="rememberCheck">Remember Me</label>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-success w-100">Login</button>
                         <div class="row mt-1">
@@ -85,6 +94,9 @@
     <!-- js -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('plugins/sweetalert2/js/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('plugins/toastr/js/toastr.min.js') }}"></script>
+    <script src="{{ asset('plugins/swiper/js/swiper-bundle.min.js') }}"></script>
     <script type="text/javascript">
         $('.register-href').click(function() {
             $('#loginModal').modal('hide');
@@ -95,7 +107,62 @@
             $('#registerModal').modal('hide');
             $('#loginModal').modal('show');
         });
+
+        $('.form-login').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "{{ route('login') }}",
+                method: "POST",
+                data: formData,
+                beforeSend: function(e) {},
+                complete: function(e) {},
+                success: function(res) {
+                    if (res.status == 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Login success!',
+                            confirmButtonColor: '#4e73df'
+                        }).then(function() {
+                            window.location.replace('{{ route('home') }}');
+                        });
+                    } else {
+                        toastr['error']('Invalid account.');
+                    }
+                },
+                error: function(res) {
+                    $.each(res.responseJSON.errors, function(id, error) {
+                        toastr['error'](error);
+                    });
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        $('.btn-logout').click(function() {
+            Swal.fire({
+                icon: 'question',
+                title: 'Are you sure want to logout?',
+                confirmButtonColor: '#4e73df',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                showCancelButton: true
+            }).then(function(res) {
+                if (res.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Logout success!',
+                        confirmButtonColor: '#4e73df'
+                    }).then(function() {
+                        window.location.replace('{{ route('logout') }}');
+                    });
+                }
+            });
+        });
     </script>
+    @stack('scripts')
 </body>
 
 </html>
