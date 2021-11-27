@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Admin routes
-Route::middleware(['admin.guest', 'can:isAdmin'])->group(function () {
+Route::middleware(['admin.guest'])->group(function () {
     Route::get('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
     Route::post('/admin/login', [AdminAuthController::class, 'authenticate']);
 });
