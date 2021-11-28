@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -24,6 +26,26 @@ class AuthController extends Controller
         }
 
         return response()->json(['status' => 'fail']);
+    }
+
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email:dns', 'unique:users'],
+            'password' => ['required'],
+            'confirm_password' => ['required', 'same:password']
+        ], [
+            'name.required' => 'Name is required.',
+            'email.required' => 'Email is required.',
+            'password.required' => 'Password is required.',
+            'confirm_password.required' => 'Confirm password is required.'
+        ]);
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
+        User::create($validatedData);
+        return response()->json(['message' => 'Register success!']);
     }
 
     public function logout(Request $request)

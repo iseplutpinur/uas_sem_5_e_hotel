@@ -71,6 +71,9 @@
                     <form class="form-register">
                         @csrf
                         <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Fullname" name="name">
+                        </div>
+                        <div class="mb-3">
                             <input type="text" class="form-control" placeholder="Email" name="email">
                         </div>
                         <div class="mb-3">
@@ -79,7 +82,7 @@
                         <div class="mb-3">
                             <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password">
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Login</button>
+                        <button type="submit" class="btn btn-success w-100">Register</button>
                         <div class="row mt-1">
                             <div class="col">
                                 <small>Already have an account? <a role="button" class="login-href text-decoration-none">Login</a></small>
@@ -129,6 +132,36 @@
                     } else {
                         toastr['error']('Invalid account.');
                     }
+                },
+                error: function(res) {
+                    $.each(res.responseJSON.errors, function(id, error) {
+                        toastr['error'](error);
+                    });
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        $('.form-register').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "{{ route('register') }}",
+                method: "POST",
+                data: formData,
+                beforeSend: function(e) {},
+                complete: function(e) {},
+                success: function(res) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: res.message,
+                        confirmButtonColor: '#4e73df'
+                    }).then(function() {
+                        $('#registerModal').modal('hide');
+                        $('#loginModal').modal('show');
+                    });
                 },
                 error: function(res) {
                     $.each(res.responseJSON.errors, function(id, error) {

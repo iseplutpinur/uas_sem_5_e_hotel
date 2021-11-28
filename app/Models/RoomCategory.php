@@ -16,4 +16,9 @@ class RoomCategory extends Model
             return $query->where($filters['search_by'], 'like', '%' . $search . '%');
         });
     }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
 }

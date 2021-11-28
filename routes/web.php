@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoomDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,11 @@ use Illuminate\Support\Facades\Route;
 
 // User routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/detail/{room_category:name}', [RoomDetailController::class, 'index'])->name('detail');
 Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

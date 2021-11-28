@@ -55,6 +55,18 @@
     <div class="sidebar-heading">
         Master Data
     </div>
+    <!-- page -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true" aria-controls="collapsePage">
+            <i class="fas fa-fw fa-file-alt"></i>
+            <span>Page</span>
+        </a>
+        <div id="collapsePage" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="#"><i class="fas fa-images mr-2"></i>Banner</a>
+            </div>
+        </div>
+    </li>
     <!-- room -->
     <li class="nav-item {{ Request::is('admin/room-category*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoom" aria-expanded="true" aria-controls="collapseRoom">
@@ -65,6 +77,18 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ Request::is('admin/room-category*') ? 'active' : '' }}" href="{{ route('admin.room-category') }}"><i class="fas fa-bed mr-2"></i>Room Category</a>
                 <a class="collapse-item {{ Request::is('admin/room') ? 'active' : '' }}" href="{{ route('admin.room') }}"><i class="fas fa-bed mr-2"></i>Room</a>
+            </div>
+        </div>
+    </li>
+    <!-- transaction -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true" aria-controls="collapseTransaction">
+            <i class="fas fa-fw fa-dollar-sign"></i>
+            <span>Transaction</span>
+        </a>
+        <div id="collapseTransaction" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="#"><i class="fas fa-wallet mr-2"></i>Payment Method</a>
             </div>
         </div>
     </li>
