@@ -100,6 +100,7 @@
                                     confirmButtonColor: '#409AC7'
                                 }).then(function() {
                                     $('.form-input')[0].reset();
+                                    $('.img-preview').attr('src', '{{ asset('images/default.png') }}');
                                 });
                             },
                             error: function(res) {

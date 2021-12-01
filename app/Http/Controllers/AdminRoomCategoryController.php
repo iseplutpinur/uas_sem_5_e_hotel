@@ -35,11 +35,20 @@ class AdminRoomCategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required'],
-            'description' => ['required']
+            'description' => ['required'],
+            'cover' => ['image', 'file', 'max:2048'],
         ], [
             'name.required' => 'Name is required.',
-            'description.required' => 'Description is required.'
+            'description.required' => 'Description is required.',
+            'cover.image' => 'Cover must be an image.',
+            'cover.file' => 'Cover must be an file.'
         ]);
+
+        if ($request->file('cover')) {
+            $fileName = 'e-hotel-' . time() . '.' . $request->file('cover')->extension();
+            Storage::putFileAs('room_categories-photo', $request->file('cover'), $fileName);
+            $validatedData['cover'] = $fileName;
+        }
 
         RoomCategory::create($validatedData);
         return response()->json(['message' => 'Data saved successfully!']);
@@ -58,6 +67,9 @@ class AdminRoomCategoryController extends Controller
         $room_category_images = RoomCategoryImage::where('room_category_id', $id)->get();
         foreach ($room_category_images as $room_category_image) {
             Storage::delete('room_category_images-photo/' . $room_category_image->photo);
+        }
+        if (RoomCategory::find($id)->cover) {
+            Storage::delete('room_categories-photo/' . RoomCategory::find($id)->cover);
         }
         RoomCategoryImage::where('room_category_id', $id)->delete();
         RoomCategory::destroy($id);
@@ -103,5 +115,13 @@ class AdminRoomCategoryController extends Controller
         }
         RoomCategoryImage::destroy($id);
         return response()->json(['message' => 'Data deleted successfully!']);
+    }
+
+    public function detail($id)
+    {
+        return view('admin.room-category.detail', [
+            'title' => 'Room Category Detail',
+            'room_category' => RoomCategory::find($id)
+        ]);
     }
 }

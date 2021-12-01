@@ -4,25 +4,42 @@
     <div class="container-fluid">
         <h1 class="h3 mb-4 text-gray-800">Add Room Category</h1>
 
-        <div class="card shadow col-6">
-            <div class="card-body">
-                <form class="form-input">
-                    @csrf
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="name">
+        <form class="form-input" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="col-3">
+                    <div class="card shadow ">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Cover</label>
+                                <div class="mb-3">
+                                    <img src="{{ asset('images/default.png') }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
+                                </div>
+                                <input type="file" class="form-control-file" name="cover">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input type="text" class="form-control" name="description">
+                </div>
+                <div class="col-9">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" class="form-control" name="description">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{{ route('admin.room-category') }}" class="btn btn-secondary">Back</a>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ route('admin.room-category') }}" class="btn btn-secondary">Back</a>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
     @push('scripts')
@@ -52,6 +69,7 @@
                                     confirmButtonColor: '#409AC7'
                                 }).then(function() {
                                     $('.form-input')[0].reset();
+                                    $('.img-preview').attr('src', '{{ asset('images/default.png') }}');
                                 });
                             },
                             error: function(res) {
@@ -65,6 +83,14 @@
                         });
                     }
                 });
+            });
+
+            $('input[name="cover"]').change(function() {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('.img-preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
             });
         </script>
     @endpush

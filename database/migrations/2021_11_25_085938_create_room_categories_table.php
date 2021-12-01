@@ -17,6 +17,7 @@ class CreateRoomCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('cover')->nullable();
             $table->timestamps();
         });
     }

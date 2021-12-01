@@ -9,6 +9,7 @@ class RoomCategory extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $with = ['image'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -20,5 +21,15 @@ class RoomCategory extends Model
     public function getRouteKeyName()
     {
         return 'name';
+    }
+
+    public function room()
+    {
+        return $this->hasMany(Room::class);
+    }
+
+    public function image()
+    {
+        return $this->hasMany(RoomCategoryImage::class);
     }
 }
