@@ -9,7 +9,9 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <label>Cover</label>
-                        <img src="{{ asset('images/room_categories-photo/' . $room_category->cover) }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
+                        <div>
+                            <img src="{{ asset('images/room_categories-photo/' . $room_category->cover) }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
+                        </div>
                     </div>
                 </div>
             </div>

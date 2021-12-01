@@ -56,39 +56,40 @@
         Master Data
     </div>
     <!-- page -->
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('admin/banner*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true" aria-controls="collapsePage">
             <i class="fas fa-fw fa-file-alt"></i>
             <span>Page</span>
         </a>
-        <div id="collapsePage" class="collapse" data-parent="#accordionSidebar">
+        <div id="collapsePage" class="collapse {{ Request::is('admin/banner*') ? 'show' : '' }}" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#"><i class="fas fa-images mr-2"></i>Banner</a>
+                <a class="collapse-item {{ Request::is('admin/banner*') ? 'active' : '' }}" href="{{ route('admin.banner') }}"><i class="fas fa-images mr-2"></i>Banner</a>
             </div>
         </div>
     </li>
     <!-- room -->
-    <li class="nav-item {{ Request::is('admin/room-category*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('admin/room-category*', 'admin/room', 'admin/room/*', 'admin/facility*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoom" aria-expanded="true" aria-controls="collapseRoom">
             <i class="fas fa-fw fa-bed"></i>
             <span>Room</span>
         </a>
-        <div id="collapseRoom" class="collapse {{ Request::is('admin/room-category*', 'admin/room') ? 'show' : '' }}" data-parent="#accordionSidebar">
+        <div id="collapseRoom" class="collapse {{ Request::is('admin/room-category*', 'admin/room', 'admin/room/*', 'admin/facility*') ? 'show' : '' }}" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ Request::is('admin/room-category*') ? 'active' : '' }}" href="{{ route('admin.room-category') }}"><i class="fas fa-bed mr-2"></i>Room Category</a>
                 <a class="collapse-item {{ Request::is('admin/room') ? 'active' : '' }}" href="{{ route('admin.room') }}"><i class="fas fa-bed mr-2"></i>Room</a>
+                <a class="collapse-item {{ Request::is('admin/facility*') ? 'active' : '' }}" href="{{ route('admin.facility') }}"><i class="fas fa-newspaper mr-2"></i>Facility</a>
             </div>
         </div>
     </li>
     <!-- transaction -->
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('admin/payment-method*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true" aria-controls="collapseTransaction">
             <i class="fas fa-fw fa-dollar-sign"></i>
             <span>Transaction</span>
         </a>
-        <div id="collapseTransaction" class="collapse" data-parent="#accordionSidebar">
+        <div id="collapseTransaction" class="collapse {{ Request::is('admin/payment-method*') ? 'show' : '' }}" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#"><i class="fas fa-wallet mr-2"></i>Payment Method</a>
+                <a class="collapse-item {{ Request::is('admin/payment-method*') ? 'active' : '' }}" href="{{ route('admin.payment-method') }}"><i class="fas fa-wallet mr-2"></i>Payment Method</a>
             </div>
         </div>
     </li>

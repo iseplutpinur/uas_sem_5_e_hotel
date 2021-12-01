@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminAuthorizationSettingController;
+use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminFacilityController;
 use App\Http\Controllers\AdminGroupUserController;
+use App\Http\Controllers\AdminPaymentMethodController;
 use App\Http\Controllers\AdminRoomCategoryController;
 use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminUserController;
@@ -86,6 +89,12 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::get('/admin/room/edit/{id}', [AdminRoomController::class, 'edit'])->name('admin.room.edit');
     Route::post('/admin/room/update', [AdminRoomController::class, 'update'])->name('admin.room.update');
     Route::delete('/admin/room/delete/{id}', [AdminRoomController::class, 'delete'])->name('admin.room.delete');
+
+    Route::get('/admin/facility', [AdminFacilityController::class, 'index'])->name('admin.facility');
+
+    Route::get('/admin/banner', [AdminBannerController::class, 'index'])->name('admin.banner');
+
+    Route::get('/admin/payment-method', [AdminPaymentMethodController::class, 'index'])->name('admin.payment-method');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [
