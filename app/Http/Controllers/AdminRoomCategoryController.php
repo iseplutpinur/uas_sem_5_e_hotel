@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Facility;
+use App\Models\Room;
 use App\Models\RoomCategory;
 use App\Models\RoomCategoryImage;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class AdminRoomCategoryController extends Controller
             $validatedData['cover'] = $fileName;
         }
 
-        $validatedData['facility_id'] = json_encode($request->facility);
+        $validatedData['facility_id'] = $request->facility;
 
         RoomCategory::create($validatedData);
         return response()->json(['message' => 'Data saved successfully!']);
@@ -62,7 +63,8 @@ class AdminRoomCategoryController extends Controller
     {
         return view('admin.room-category.edit', [
             'title' => 'Edit Room Category',
-            'room_category' => RoomCategory::find($id)
+            'room_category' => RoomCategory::find($id),
+            'facilities' => Facility::where('is_addon', false)->get()
         ]);
     }
 
@@ -123,11 +125,12 @@ class AdminRoomCategoryController extends Controller
 
     public function detail($id)
     {
+        $facility_id = RoomCategory::where('id', $id)->value('facility_id');
+        $facilities = Facility::whereIn('id', $facility_id)->get();
         return view('admin.room-category.detail', [
             'title' => 'Room Category Detail',
             'room_category' => RoomCategory::find($id),
-            'room_category_facilities' => RoomCategory::where('id', $id)->value('facility_id'),
-            'test' => RoomCategory::find($id)->getRelations()
+            'facilities' => $facilities
         ]);
     }
 }

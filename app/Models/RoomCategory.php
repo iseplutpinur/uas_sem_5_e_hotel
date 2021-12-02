@@ -9,7 +9,7 @@ class RoomCategory extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    protected $with = ['image', 'facility'];
+    protected $with = ['image'];
     protected $casts = [
         'facility_id' => 'array'
     ];
@@ -34,10 +34,5 @@ class RoomCategory extends Model
     public function image()
     {
         return $this->hasMany(RoomCategoryImage::class);
-    }
-
-    public function facility()
-    {
-        return $this->belongsTo(Facility::class, 'id');
     }
 }

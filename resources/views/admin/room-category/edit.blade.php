@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-9">
+                <div class="col-7">
                     <div class="card shadow">
                         <div class="card-body">
                             <div class="form-group">
@@ -45,10 +45,27 @@
                                 <label>Description</label>
                                 <input type="text" class="form-control" name="description" value="{{ $room_category->description }}">
                             </div>
-                            <div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="{{ route('admin.room-category') }}" class="btn btn-secondary">Back</a>
-                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow mt-3">
+                        <div class="card-body">
+                            <h5>Facility</h5>
+                            @foreach ($facilities as $facility)
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="addonCheck" name="facility[]" value="{{ $facility->id }}" @if (in_array($facility->id, $room_category->facility_id)) checked @endif>
+                                        <label class="form-check-label" for="addonCheck"><i class="{{ $facility->icon }}"></i> {{ $facility->name }}</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            <a href="{{ route('admin.room-category') }}" class="btn btn-secondary btn-block">Back</a>
                         </div>
                     </div>
                 </div>

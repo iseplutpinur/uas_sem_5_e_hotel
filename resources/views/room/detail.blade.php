@@ -9,10 +9,19 @@
             <h4>Room Details</h4>
             <div class="row">
                 <div class="col-3">
-                    <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}">
+                    @if ($room->cover)
+                        <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}">
+                    @else
+                        <img src="{{ asset('images/default.png') }}">
+                    @endif
                 </div>
                 <div class="col-6">
                     <h4>Facility</h4>
+                    <ul>
+                        @foreach ($facilities as $facility)
+                            <li><i class="{{ $facility->icon }}"></i> {{ $facility->name }}</li>
+                        @endforeach
+                    </ul>
                 </div>
                 <div class="col-3">
                     <p class="mb-0">*start from</p>
@@ -26,7 +35,11 @@
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="background: rgb(1,0,19);background: linear-gradient(351deg, rgba(1,0,19,1) 30%, rgba(0,0,0,1) 35%, rgba(63,67,68,1) 100%);">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}" class="d-block w-100" style="width: 100%; height:400px;object-fit: contain;">
+                            @if ($room->cover)
+                                <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}" class="d-block w-100" style="width: 100%; height:400px;object-fit: contain;">
+                            @else
+                                <img src="{{ asset('images/default.png') }}" class="d-block w-100" style="width: 100%; height:400px;object-fit: contain;">
+                            @endif
                         </div>
                         @foreach ($room->image as $room_image)
                             <div class="carousel-item">

@@ -56,20 +56,9 @@
                     <div class="card-body">
                         <h5>Facility</h5>
                         <ul>
-                            {{ $room_category->facility->name }}
-                            @foreach ($room_category->facility_id as $item)
-                                {{ $item }}
+                            @foreach ($facilities as $item)
+                                <li><i class="{{ $item->icon }}"></i> {{ $item->name }}</li>
                             @endforeach
-                            @foreach ($test as $item)
-                                {{ $item }}
-                            @endforeach
-                            {{-- {{ $room_category_facilities }} --}}
-                            {{-- @foreach ($room_category_facilities as $item)
-                                {{ $item }}
-                            @endforeach --}}
-                            {{-- @foreach ($room_category_facilities as $room_category_facility)
-                                <li>{{ $room_category_facility->facility }}</li>
-                            @endforeach --}}
                         </ul>
                     </div>
                 </div>
