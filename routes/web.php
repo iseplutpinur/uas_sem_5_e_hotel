@@ -91,6 +91,12 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::delete('/admin/room/delete/{id}', [AdminRoomController::class, 'delete'])->name('admin.room.delete');
 
     Route::get('/admin/facility', [AdminFacilityController::class, 'index'])->name('admin.facility');
+    Route::post('/admin/facility', [AdminFacilityController::class, 'table']);
+    Route::get('/admin/facility/add', [AdminFacilityController::class, 'add'])->name('admin.facility.add');
+    Route::post('/admin/facility/store', [AdminFacilityController::class, 'store'])->name('admin.facility.store');
+    Route::get('/admin/facility/edit/{id}', [AdminFacilityController::class, 'edit'])->name('admin.facility.edit');
+    Route::post('/admin/facility/update', [AdminFacilityController::class, 'update'])->name('admin.facility.update');
+    Route::delete('/admin/facility/delete/{id}', [AdminFacilityController::class, 'delete'])->name('admin.facility.delete');
 
     Route::get('/admin/banner', [AdminBannerController::class, 'index'])->name('admin.banner');
 

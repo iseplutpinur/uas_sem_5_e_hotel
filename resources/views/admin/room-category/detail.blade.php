@@ -10,7 +10,11 @@
                     <div class="card-body">
                         <label>Cover</label>
                         <div>
-                            <img src="{{ asset('images/room_categories-photo/' . $room_category->cover) }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
+                            @if ($room_category->cover)
+                                <img src="{{ asset('images/room_categories-photo/' . $room_category->cover) }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
+                            @else
+                                <img src="{{ asset('images/default.png') }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -46,6 +50,27 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+                <div class="card shadow mt-3">
+                    <div class="card-body">
+                        <h5>Facility</h5>
+                        <ul>
+                            {{ $room_category->facility->name }}
+                            @foreach ($room_category->facility_id as $item)
+                                {{ $item }}
+                            @endforeach
+                            @foreach ($test as $item)
+                                {{ $item }}
+                            @endforeach
+                            {{-- {{ $room_category_facilities }} --}}
+                            {{-- @foreach ($room_category_facilities as $item)
+                                {{ $item }}
+                            @endforeach --}}
+                            {{-- @foreach ($room_category_facilities as $room_category_facility)
+                                <li>{{ $room_category_facility->facility }}</li>
+                            @endforeach --}}
+                        </ul>
                     </div>
                 </div>
             </div>
