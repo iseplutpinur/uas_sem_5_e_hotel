@@ -17,6 +17,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        GroupUser::create([
+            'name' => 'Master'
+        ]);
+
         User::create([
             'name' => 'Admin',
             'username' => 'admin',
@@ -24,10 +28,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
             'is_admin' => true,
             'group_id' => '1'
-        ]);
-
-        GroupUser::create([
-            'name' => 'Master'
         ]);
     }
 }

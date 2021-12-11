@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('photo')->nullable();
             $table->boolean('is_admin')->default(false);
-            $table->foreignId('group_id')->default(0);
+            $table->foreignId('group_id')->references('id')->on('group_users')->onUpdate('cascade')->onDelete('cascade')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

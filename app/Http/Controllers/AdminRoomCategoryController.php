@@ -68,6 +68,32 @@ class AdminRoomCategoryController extends Controller
         ]);
     }
 
+    public function update(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required'],
+            'description' => ['required'],
+            'cover' => ['image', 'file', 'max:2048'],
+        ], [
+            'name.required' => 'Name is required.',
+            'description.required' => 'Description is required.',
+            'cover.image' => 'Cover must be an image.',
+            'cover.file' => 'Cover must be an file.'
+        ]);
+
+        if ($request->file('cover')) {
+            $fileName = 'e-hotel-' . time() . '.' . $request->file('cover')->extension();
+            Storage::putFileAs('room_categories-photo', $request->file('cover'), $fileName);
+            Storage::delete('room_categories-photo/' . $request->oldCover);
+            $validatedData['cover'] = $fileName;
+        }
+
+        $validatedData['facility_id'] = $request->facility;
+
+        RoomCategory::find($request->id)->update($validatedData);
+        return response()->json(['message' => 'Data updated successfully!']);
+    }
+
     public function delete($id)
     {
         $room_category_images = RoomCategoryImage::where('room_category_id', $id)->get();
@@ -126,7 +152,11 @@ class AdminRoomCategoryController extends Controller
     public function detail($id)
     {
         $facility_id = RoomCategory::where('id', $id)->value('facility_id');
-        $facilities = Facility::whereIn('id', $facility_id)->get();
+        if ($facility_id) {
+            $facilities = Facility::whereIn('id', $facility_id)->get();
+        } else {
+            $facilities = [];
+        }
         return view('admin.room-category.detail', [
             'title' => 'Room Category Detail',
             'room_category' => RoomCategory::find($id),
