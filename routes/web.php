@@ -102,6 +102,8 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::get('/admin/banner', [AdminBannerController::class, 'index'])->name('admin.banner');
 
     Route::get('/admin/payment-method', [AdminPaymentMethodController::class, 'index'])->name('admin.payment-method');
+    Route::post('/admin/payment-method', [AdminPaymentMethodController::class, 'table']);
+    Route::get('/admin/payment-method/edit/{id}', [AdminPaymentMethodController::class, 'edit'])->name('admin.payment-method.edit');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [
