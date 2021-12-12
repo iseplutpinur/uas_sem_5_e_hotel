@@ -13,7 +13,13 @@
             @if ($payment_methods->count())
                 @foreach ($payment_methods as $payment_method)
                     <tr>
-                        <td>{{ $payment_method->logo }}</td>
+                        <td>
+                            @if ($payment_method->logo)
+                                <img src="{{ asset('images/payment_method-photo/' . $payment_method->logo) }}" style="max-width: 250px; max-height: 70px" class="border">
+                            @else
+                                <img src="{{ asset('images/default.png') }}" style="width: 100px;height: 100px;;object-fit: cover" class="border">
+                            @endif
+                        </td>
                         <td>{{ $payment_method->name }}</td>
                         <td>{{ $payment_method->number }}</td>
                         <td>{{ $payment_method->owner }}</td>

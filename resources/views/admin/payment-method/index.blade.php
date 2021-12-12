@@ -23,7 +23,7 @@
                         </form>
                     </div>
                     <div class="col-md-5" align="right">
-                        <a href="{{ route('admin.group-user-admin.add') }}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+                        <a href="{{ route('admin.payment-method.add') }}" class="btn btn-success"><i class="fas fa-plus"></i></a>
                         <button class="btn btn-primary" onclick="loadTable()"><i class="fas fa-redo"></i></button>
                     </div>
                 </div>
@@ -62,6 +62,45 @@
                     error: function(res) {}
                 });
             }
+
+            $('#table-data').on('click', '.btn-delete', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Are you sure to delete this data?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#409AC7',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        var id = $(this).data('id');
+                        var url = "{{ route('admin.payment-method.delete', ':id') }}";
+                        url = url.replace(':id', id);
+                        $.ajax({
+                            url: url,
+                            method: "DELETE",
+                            data: {
+                                _token: $("meta[name='csrf-token']").attr("content")
+                            },
+                            beforeSend: function(e) {},
+                            complete: function(e) {},
+                            success: function(res) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: res.message,
+                                    confirmButtonColor: '#409AC7'
+                                }).then(function() {
+                                    loadTable();
+                                });
+                            },
+                            error: function(res) {
+                                toastr['error']('Delete data failed, there is a problem with the server!');
+                            }
+                        });
+                    }
+                });
+            });
         </script>
     @endpush
 @endsection

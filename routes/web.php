@@ -103,7 +103,11 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
 
     Route::get('/admin/payment-method', [AdminPaymentMethodController::class, 'index'])->name('admin.payment-method');
     Route::post('/admin/payment-method', [AdminPaymentMethodController::class, 'table']);
+    Route::get('/admin/payment-method/add', [AdminPaymentMethodController::class, 'add'])->name('admin.payment-method.add');
+    Route::post('/admin/payment-method/store', [AdminPaymentMethodController::class, 'store'])->name('admin.payment-method.store');
     Route::get('/admin/payment-method/edit/{id}', [AdminPaymentMethodController::class, 'edit'])->name('admin.payment-method.edit');
+    Route::post('/admin/payment-method/update', [AdminPaymentMethodController::class, 'update'])->name('admin.payment-method.update');
+    Route::delete('/admin/payment-method/delete/{id}', [AdminPaymentMethodController::class, 'delete'])->name('admin.payment-method.delete');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [
