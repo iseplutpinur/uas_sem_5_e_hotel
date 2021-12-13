@@ -2,26 +2,21 @@
 @section('title', $title)
 @section('admin-content')
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Edit Payment Method</h1>
+        <h1 class="h3 mb-4 text-gray-800">Add Banner</h1>
 
         <form class="form-input" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="id" value="{{ $payment_method->id }}">
-            <input type="hidden" name="oldLogo" value="{{ $payment_method->logo }}">
             <div class="row">
                 <div class="col-3">
                     <div class="card shadow">
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Logo</label>
+                                <label>Photo</label>
                                 <div class="mb-3">
-                                    @if ($payment_method->logo)
-                                        <img src="{{ asset('images/payment_method-photo/' . $payment_method->logo) }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
-                                    @else
-                                        <img src="{{ asset('images/default.png') }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
-                                    @endif
+                                    <img src="{{ asset('images/default.png') }}" class="border img-preview" style="object-fit: cover;max-width: 200px;width: 100%;">
                                 </div>
-                                <input type="file" class="form-control-file" name="logo">
+                                <input type="file" class="form-control-file" name="photo">
+                                <small class="form-text text-muted">Recommended size: 1110px x 350px</small>
                             </div>
                         </div>
                     </div>
@@ -31,19 +26,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" value="{{ $payment_method->name }}">
-                            </div>
-                            <div class="form-group">
-                                <label>Number</label>
-                                <input type="number" class="form-control" name="number" value="{{ $payment_method->number }}">
-                            </div>
-                            <div class="   form-group">
-                                <label>Owner</label>
-                                <input type="text" class="form-control" name="owner" value="{{ $payment_method->owner }}">
+                                <input type="text" class="form-control" name="name">
                             </div>
                             <div>
-                                <button type=" submit" class="btn btn-primary">Submit</button>
-                                <a href="{{ route('admin.payment-method') }}" class="btn btn-secondary">Back</a>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{{ route('admin.banner') }}" class="btn btn-secondary">Back</a>
                             </div>
                         </div>
                     </div>
@@ -57,8 +44,8 @@
             $('.form-input').submit(function(e) {
                 e.preventDefault();
                 Swal.fire({
+                    title: 'Are you sure to save this data?',
                     icon: 'question',
-                    title: 'Are you sure to update this data?',
                     showCancelButton: true,
                     confirmButtonColor: '#409AC7',
                     confirmButtonText: 'Yes',
@@ -67,7 +54,7 @@
                     if (res.isConfirmed) {
                         var formData = new FormData(this);
                         $.ajax({
-                            url: "{{ route('admin.payment-method.update') }}",
+                            url: "{{ route('admin.banner.store') }}",
                             method: "POST",
                             data: formData,
                             beforeSend: function(e) {},
@@ -78,8 +65,9 @@
                                     title: res.message,
                                     confirmButtonColor: '#409AC7'
                                 }).then(function() {
-                                    location.reload();
-                                });;
+                                    $('.form-input')[0].reset();
+                                    $('.img-preview').attr('src', '{{ asset('images/default.png') }}');
+                                });
                             },
                             error: function(res) {
                                 $.each(res.responseJSON.errors, function(id, error) {
@@ -94,7 +82,7 @@
                 });
             });
 
-            $('input[name="logo"]').change(function() {
+            $('input[name="photo"]').change(function() {
                 let reader = new FileReader();
                 reader.onload = (e) => {
                     $('.img-preview').attr('src', e.target.result);

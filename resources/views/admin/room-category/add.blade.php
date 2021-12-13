@@ -31,6 +31,10 @@
                                 <label>Description</label>
                                 <input type="text" class="form-control" name="description">
                             </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="number" class="form-control" name="price">
+                            </div>
                         </div>
                     </div>
                     <div class="card shadow mt-3">

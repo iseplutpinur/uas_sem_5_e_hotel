@@ -60,7 +60,7 @@ class AdminPaymentMethodController extends Controller
     public function edit($id)
     {
         return view('admin.payment-method.edit', [
-            'title' => 'Add Payment Method',
+            'title' => 'Edit Payment Method',
             'payment_method' => PaymentMethod::find($id)
         ]);
     }
@@ -85,8 +85,6 @@ class AdminPaymentMethodController extends Controller
             Storage::putFileAs('payment_method-photo', $request->file('logo'), $fileName);
             Storage::delete('payment_method-photo/' . $request->oldLogo);
             $validatedData['logo'] = $fileName;
-        } else {
-            $validatedData['logo'] = $request->oldLogo;
         }
 
         PaymentMethod::find($request->id)->update($validatedData);

@@ -39,10 +39,12 @@ class AdminRoomCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => ['required'],
             'description' => ['required'],
+            'price' => ['required'],
             'cover' => ['image', 'file', 'max:2048'],
         ], [
             'name.required' => 'Name is required.',
             'description.required' => 'Description is required.',
+            'price.required' => 'Price is required.',
             'cover.image' => 'Cover must be an image.',
             'cover.file' => 'Cover must be an file.'
         ]);
@@ -73,10 +75,12 @@ class AdminRoomCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => ['required'],
             'description' => ['required'],
+            'price' => ['required'],
             'cover' => ['image', 'file', 'max:2048'],
         ], [
             'name.required' => 'Name is required.',
             'description.required' => 'Description is required.',
+            'price.required' => 'Price is required.',
             'cover.image' => 'Cover must be an image.',
             'cover.file' => 'Cover must be an file.'
         ]);

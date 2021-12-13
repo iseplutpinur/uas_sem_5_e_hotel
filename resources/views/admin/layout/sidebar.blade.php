@@ -87,9 +87,10 @@
             <i class="fas fa-fw fa-dollar-sign"></i>
             <span>Transaction</span>
         </a>
-        <div id="collapseTransaction" class="collapse {{ Request::is('admin/payment-method*') ? 'show' : '' }}" data-parent="#accordionSidebar">
+        <div id="collapseTransaction" class="collapse {{ Request::is('admin/payment-method*', 'admin/transaction*') ? 'show' : '' }}" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ Request::is('admin/payment-method*') ? 'active' : '' }}" href="{{ route('admin.payment-method') }}"><i class="fas fa-wallet mr-2"></i>Payment Method</a>
+                <a class="collapse-item {{ Request::is('admin/transaction*') ? 'active' : '' }}" href="{{ route('admin.transaction') }}"><i class="fas fa-file-invoice-dollar mr-2"></i>Transaction</a>
             </div>
         </div>
     </li>

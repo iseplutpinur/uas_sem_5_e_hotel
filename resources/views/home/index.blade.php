@@ -3,12 +3,13 @@
 @section('content')
     <div class="swiper swiper-banner">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="https://cdn.discordapp.com/attachments/329112994258747392/881524424329814066/1110x350.png" alt="banner" style="width: 100%">
-            </div>
-            <div class="swiper-slide">
-                <img src="https://cdn.discordapp.com/attachments/329112994258747392/881524424329814066/1110x350.png" alt="banner" style="width: 100%">
-            </div>
+            @if ($banners)
+                @foreach ($banners as $banner)
+                    <div class="swiper-slide">
+                        <img src="{{ asset('images/banners-photo/' . $banner->photo) }}" alt="banner" style="width: 100%">
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 
@@ -35,7 +36,7 @@
                                     <span class="text-muted">0.0</span>
                                 </div>
                                 <p class="mb-0 text-dark small">*start from</p>
-                                <h5 class="mb-0">Rp. 2000 / Night</h5>
+                                <h5 class="mb-0">Rp. {{ number_format($room_category->price) }} /Night</h5>
                                 <p class="m-0 text-muted">{{ $room_category->name }}</p>
                             </div>
                         </div>

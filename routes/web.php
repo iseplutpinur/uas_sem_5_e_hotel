@@ -9,8 +9,10 @@ use App\Http\Controllers\AdminGroupUserController;
 use App\Http\Controllers\AdminPaymentMethodController;
 use App\Http\Controllers\AdminRoomCategoryController;
 use App\Http\Controllers\AdminRoomController;
+use App\Http\Controllers\AdminTransactionController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CheckController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomDetailController;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +37,9 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 Route::middleware(['auth'])->group(function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::post('/check/is_rent', [CheckController::class, 'is_rent'])->name('check.is_rent');
 });
 
 // Admin routes
@@ -100,6 +104,12 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::delete('/admin/facility/delete/{id}', [AdminFacilityController::class, 'delete'])->name('admin.facility.delete');
 
     Route::get('/admin/banner', [AdminBannerController::class, 'index'])->name('admin.banner');
+    Route::post('/admin/banner', [AdminBannerController::class, 'table']);
+    Route::get('/admin/banner/add', [AdminBannerController::class, 'add'])->name('admin.banner.add');
+    Route::post('/admin/banner/store', [AdminBannerController::class, 'store'])->name('admin.banner.store');
+    Route::get('/admin/banner/edit/{id}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit');
+    Route::post('/admin/banner/update', [AdminBannerController::class, 'update'])->name('admin.banner.update');
+    Route::delete('/admin/banner/delete/{id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
 
     Route::get('/admin/payment-method', [AdminPaymentMethodController::class, 'index'])->name('admin.payment-method');
     Route::post('/admin/payment-method', [AdminPaymentMethodController::class, 'table']);
@@ -108,6 +118,8 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::get('/admin/payment-method/edit/{id}', [AdminPaymentMethodController::class, 'edit'])->name('admin.payment-method.edit');
     Route::post('/admin/payment-method/update', [AdminPaymentMethodController::class, 'update'])->name('admin.payment-method.update');
     Route::delete('/admin/payment-method/delete/{id}', [AdminPaymentMethodController::class, 'delete'])->name('admin.payment-method.delete');
+
+    Route::get('/admin/transaction', [AdminTransactionController::class, 'index'])->name('admin.transaction');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [

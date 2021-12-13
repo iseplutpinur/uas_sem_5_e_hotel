@@ -46,6 +46,10 @@
                                 <label>Description</label>
                                 <input type="text" class="form-control" name="description" value="{{ $room_category->description }}">
                             </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="number" class="form-control" name="price" value="{{ $room_category->price }}">
+                            </div>
                         </div>
                     </div>
                     <div class="card shadow mt-3">
@@ -99,7 +103,9 @@
                                     icon: 'success',
                                     title: res.message,
                                     confirmButtonColor: '#409AC7'
-                                });
+                                }).then(function() {
+                                    location.reload();
+                                });;
                             },
                             error: function(res) {
                                 $.each(res.responseJSON.errors, function(id, error) {

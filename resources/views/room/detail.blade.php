@@ -10,9 +10,9 @@
             <div class="row">
                 <div class="col-3">
                     @if ($room->cover)
-                        <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}">
+                        <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}" class="border" style="object-fit: cover;max-width: 250px;width: 100%;">
                     @else
-                        <img src="{{ asset('images/default.png') }}">
+                        <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-width: 250px;width: 100%;">
                     @endif
                 </div>
                 <div class="col-6">
@@ -25,8 +25,8 @@
                 </div>
                 <div class="col-3">
                     <p class="mb-0">*start from</p>
-                    <h4>Rp. 1.000.000/ Night</h4>
-                    <button class="btn btn-success w-100">Book Now!</button>
+                    <h4>Rp. {{ number_format($room->price) }} /Night</h4>
+                    <button class="btn btn-success w-100 btn-book" data-id="{{ Auth::user()->id }}">Book Now!</button>
                 </div>
             </div>
 
@@ -59,4 +59,61 @@
             </div>
         </div>
     </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel">Booking Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-input">
+                        @csrf
+                        <input type="text" name="user_id" value="{{ Auth::id() }}">
+                        <input type="text" name="room_id" value="{{ $room->id }}">
+                        <div class="mb-3">
+                            <label class="form-label">Check in</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Check out</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+        <script type="text/javascript">
+            $('.btn-book').click(function(e) {
+                e.preventDefault();
+                var data = {
+                    _token: "{{ csrf_token() }}",
+                    id: $(this).data('id')
+                };
+                $.ajax({
+                    url: "{{ route('check.is_rent') }}",
+                    method: "POST",
+                    data: data,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        if (res == true) {
+                            toastr['error']('Book failed, you still have an active transaction!');
+                        } else if (res == false) {
+                            $('#bookModal').modal('show');
+                        }
+                    },
+                    error: function(res) {
+                        toastr['error']('Book failed, there is a problem with the server!');
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection

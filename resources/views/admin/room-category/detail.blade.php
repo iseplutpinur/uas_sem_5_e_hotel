@@ -40,6 +40,10 @@
                                         <td>{!! $room_category->description !!}</td>
                                     </tr>
                                     <tr>
+                                        <td>Price</td>
+                                        <td>Rp. {{ number_format($room_category->price) }} /Night</td>
+                                    </tr>
+                                    <tr>
                                         <td>Room Total</td>
                                         <td>{{ $room_category->room->count() }}</td>
                                     </tr>

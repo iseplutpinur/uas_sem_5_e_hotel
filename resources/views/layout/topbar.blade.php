@@ -13,6 +13,7 @@
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Active Transaction</a></li>
                                 <li><a class="dropdown-item" href="#">Transaction History</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
