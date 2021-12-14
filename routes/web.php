@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActiveTransactionController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminAuthorizationSettingController;
 use App\Http\Controllers\AdminBannerController;
@@ -38,6 +39,10 @@ Route::middleware(['guest'])->group(function () {
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/active-transaction', [ActiveTransactionController::class, 'index'])->name('active-transaction');
+
+    Route::post('/detail/book', [RoomDetailController::class, 'book'])->name('detail.book');
 
     Route::post('/check/is_rent', [CheckController::class, 'is_rent'])->name('check.is_rent');
 });

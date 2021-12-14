@@ -72,14 +72,14 @@
                     <form class="form-input">
                         @csrf
                         <input type="text" name="user_id" value="{{ Auth::id() }}">
-                        <input type="text" name="room_id" value="{{ $room->id }}">
+                        <input type="text" name="room_category_id" value="{{ $room->id }}">
                         <div class="mb-3">
                             <label class="form-label">Check in</label>
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" name="check_in">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Check out</label>
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" name="check_out">
                         </div>
                         <button type="submit" class="btn btn-success w-100">Book</button>
                     </form>
@@ -111,6 +111,46 @@
                     },
                     error: function(res) {
                         toastr['error']('Book failed, there is a problem with the server!');
+                    }
+                });
+            });
+
+            $('.form-input').submit(function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Are you sure to submit this book?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#409AC7',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        var formData = new FormData(this);
+                        $.ajax({
+                            url: "{{ route('detail.book') }}",
+                            method: "POST",
+                            data: formData,
+                            beforeSend: function(e) {},
+                            complete: function(e) {},
+                            success: function(res) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: res.message,
+                                    confirmButtonColor: '#409AC7'
+                                }).then(function() {
+                                    window.location = "{{ route('active-transaction') }}";
+                                });
+                            },
+                            error: function(res) {
+                                $.each(res.responseJSON.errors, function(id, error) {
+                                    toastr['error'](error);
+                                });
+                            },
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        });
                     }
                 });
             });

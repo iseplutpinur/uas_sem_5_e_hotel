@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'photo',
         'is_admin',
+        'is_rent',
         'group_id'
     ];
 
