@@ -125,6 +125,7 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::delete('/admin/payment-method/delete/{id}', [AdminPaymentMethodController::class, 'delete'])->name('admin.payment-method.delete');
 
     Route::get('/admin/transaction', [AdminTransactionController::class, 'index'])->name('admin.transaction');
+    Route::post('/admin/transaction', [AdminTransactionController::class, 'table']);
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [

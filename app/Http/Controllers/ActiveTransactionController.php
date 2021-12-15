@@ -12,7 +12,7 @@ class ActiveTransactionController extends Controller
     {
         return view('active-transaction.index', [
             'title' => 'Active Transaction',
-            'active_transaction' => Transaction::where('user_id', Auth::id())->first()
+            'active_transaction' => Transaction::where('user_id', Auth::id())->whereIn('status', ['active', 'waiting'])->first()
         ]);
     }
 }

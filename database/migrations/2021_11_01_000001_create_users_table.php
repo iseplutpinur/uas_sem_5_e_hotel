@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('photo')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_rent')->default(false);
-            $table->foreignId('group_id')->references('id')->on('group_users')->onUpdate('cascade')->onDelete('cascade')->default(0);
+            $table->foreignId('group_id')->nullable()->references('id')->on('group_users')->onUpdate('cascade')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
