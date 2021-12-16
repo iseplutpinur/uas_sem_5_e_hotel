@@ -18,6 +18,7 @@ class CreateRoomCategoriesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->bigInteger('price');
+            $table->integer('guest');
             $table->string('cover')->nullable();
             $table->string('facility_id')->nullable();
             $table->timestamps();

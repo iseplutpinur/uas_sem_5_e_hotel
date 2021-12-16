@@ -26,7 +26,11 @@
                 <div class="col-3">
                     <p class="mb-0">*start from</p>
                     <h4>Rp. {{ number_format($room->price) }} /Night</h4>
-                    <button class="btn btn-success w-100 btn-book" data-id="{{ Auth::user()->id }}">Book Now!</button>
+                    @auth
+                        <button class="btn btn-success w-100 btn-book" data-id="{{ Auth::user()->id }}">Book Now!</button>
+                    @else
+                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#loginModal">Book Now!</button>
+                    @endauth
                 </div>
             </div>
 
@@ -73,6 +77,10 @@
                         @csrf
                         <input type="text" name="user_id" value="{{ Auth::id() }}">
                         <input type="text" name="room_category_id" value="{{ $room->id }}">
+                        <div class="mb-3">
+                            <label class="form-label">Guest Count</label>
+                            <input type="number" class="form-control" name="guest">
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Check in</label>
                             <input type="date" class="form-control" name="check_in">

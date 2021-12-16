@@ -19,7 +19,8 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('room_category_id')->references('id')->on('room_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->date('check_in');
             $table->date('check_out');
-            $table->enum('status', ['active', 'inactive', 'canceled', 'waiting'])->default('waiting');
+            $table->integer('guest');
+            $table->enum('status', ['active', 'inactive', 'canceled', 'waiting', 'payment'])->default('waiting');
             $table->timestamps();
         });
     }

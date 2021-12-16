@@ -6,9 +6,17 @@
 
         <div class="card shadow">
             <div class="card-header">
-                <form class="form-search">
-                    @csrf
-                </form>
+                <div class="row">
+                    <div class="col">
+                        <form class="form-search">
+                            @csrf
+                        </form>
+                    </div>
+                    <div class="col" align="right">
+                        <button class="btn btn-success"><i class="fas fa-filter"></i></button>
+                        <button class="btn btn-primary" onclick="loadTable()"><i class="fas fa-redo"></i></button>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div id="table-data"></div>

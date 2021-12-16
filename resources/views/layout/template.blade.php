@@ -127,7 +127,7 @@
                             title: 'Login success!',
                             confirmButtonColor: '#4e73df'
                         }).then(function() {
-                            window.location.replace('{{ route('home') }}');
+                            location.reload();
                         });
                     } else {
                         toastr['error']('Invalid account.');

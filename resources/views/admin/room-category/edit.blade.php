@@ -50,6 +50,10 @@
                                 <label>Price</label>
                                 <input type="number" class="form-control" name="price" value="{{ $room_category->price }}">
                             </div>
+                            <div class="form-group">
+                                <label>Max Guest</label>
+                                <input type="number" class="form-control" name="guest" value="{{ $room_category->guest }}">
+                            </div>
                         </div>
                     </div>
                     <div class="card shadow mt-3">

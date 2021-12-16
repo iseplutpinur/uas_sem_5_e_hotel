@@ -25,6 +25,8 @@
                     <ul>
                         <li class="fw-bold">Booked by</li>
                         {{ $active_transaction->user->name }}
+                        <li class="fw-bold">Guest count</li>
+                        {{ $active_transaction->guest }} Person
                         <li class="fw-bold">Check in on</li>
                         {{ date('d F Y', strtotime($active_transaction->check_in)) }}
                         <li class="fw-bold">Check out on</li>

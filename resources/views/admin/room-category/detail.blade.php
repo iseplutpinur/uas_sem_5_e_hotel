@@ -44,6 +44,10 @@
                                         <td>Rp. {{ number_format($room_category->price) }} /Night</td>
                                     </tr>
                                     <tr>
+                                        <td>Max Guest</td>
+                                        <td>{{ $room_category->guest }} Person</td>
+                                    </tr>
+                                    <tr>
                                         <td>Room Total</td>
                                         <td>{{ $room_category->room->count() }}</td>
                                     </tr>
