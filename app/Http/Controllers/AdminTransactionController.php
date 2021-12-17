@@ -29,4 +29,13 @@ class AdminTransactionController extends Controller
             'transaction' => Transaction::find($id)
         ]);
     }
+
+    public function update_status(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => ['required'],
+            'status' => ['required']
+        ]);
+        Transaction::find($request->id)->update($validatedData);
+    }
 }

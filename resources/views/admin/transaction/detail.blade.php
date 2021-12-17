@@ -8,7 +8,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <img src="{{ asset('images/room_categories-photo/' . $transaction->room_category->cover) }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
+                        @if ($transaction->room_category->cover)
+                            <img src="{{ asset('images/room_categories-photo/' . $transaction->room_category->cover) }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
+                        @else
+                            <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
+                        @endif
                     </div>
                     <div class="col">
                         <h5>Room Detail</h5>
@@ -33,10 +37,51 @@
                             <li class="font-weight-bold">Check out on</li>
                             {{ date('d F Y', strtotime($transaction->check_out)) }}
                             <li class="font-weight-bold">Status</li>
+                            <form class="form-status">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                <select class="form-control" name="status">
+                                    <option value="">Select status</option>
+                                    <option value="waiting" @if ($transaction->status == 'waiting') selected @endif>Waiting for confirmation</option>
+                                    <option value="payment" @if ($transaction->status == 'payment') selected @endif>Waiting for payment</option>
+                                    <option value="canceled" @if ($transaction->status == 'canceled') selected @endif>Canceled</option>
+                                    <option value="active" @if ($transaction->status == 'active') selected @endif>Active</option>
+                                    <option value="inactive" @if ($transaction->status == 'inactive') selected @endif>Inactive / Ended</option>
+                                </select>
+                            </form>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script type="text/javascript">
+            $('select[name="status"]').change(function() {
+                $('.form-status').submit();
+            });
+
+            $('.form-status').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('admin.transaction.update-status') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        toastr['success']('Transaction status changed!');
+                    },
+                    error: function(res) {
+                        toastr['error']('Update failed, there is a problem with the server!');
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+        </script>
+    @endpush
 @endsection

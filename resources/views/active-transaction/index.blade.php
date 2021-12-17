@@ -7,7 +7,11 @@
         @if ($active_transaction)
             <div class="row mt-3">
                 <div class="col">
-                    <img src="{{ asset('images/room_categories-photo/' . $active_transaction->room_category->cover) }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
+                    @if ($active_transaction->room_category->cover)
+                        <img src="{{ asset('images/room_categories-photo/' . $active_transaction->room_category->cover) }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
+                    @else
+                        <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
+                    @endif
                 </div>
                 <div class="col">
                     <h5>Room Detail</h5>
@@ -34,6 +38,9 @@
                         <li class="fw-bold">Status</li>
                         @if ($active_transaction->status == 'waiting')
                             <span class="badge bg-warning">Waiting for confirmation</span>
+                        @elseif ($active_transaction->status == 'payment')
+                            <span class="badge bg-info">Waiting for payment</span>
+                            <button class="btn btn-sm btn-success"><i class="fas fa-money-bill-wave"></i> Pay</button>
                         @elseif ($active_transaction->status == 'canceled')
                             <span class="badge bg-danger">Canceled</span> <i class="fas fa-info-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Reason for canceled here."></i>
                         @elseif ($active_transaction->status == 'inactive')

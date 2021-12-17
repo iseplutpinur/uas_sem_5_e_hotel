@@ -112,7 +112,11 @@
                     complete: function(e) {},
                     success: function(res) {
                         if (res == true) {
-                            toastr['error']('Book failed, you still have an active transaction!');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Book failed, you still have an active transaction!',
+                                confirmButtonColor: '#4e73df'
+                            });
                         } else if (res == false) {
                             $('#bookModal').modal('show');
                         }
