@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/active-transaction', [ActiveTransactionController::class, 'index'])->name('active-transaction');
+    Route::post('/active-transaction/update-payment', [ActiveTransactionController::class, 'update_payment'])->name('active-transaction.update-payment');
 
     Route::post('/detail/book', [RoomDetailController::class, 'book'])->name('detail.book');
 

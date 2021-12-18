@@ -17,6 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('room_category_id')->references('id')->on('room_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('payment_method_id')->nullable()->references('id')->on('payment_methods')->onUpdate('cascade')->onDelete('cascade');
             $table->date('check_in');
             $table->date('check_out');
             $table->integer('guest');
