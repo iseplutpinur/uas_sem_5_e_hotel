@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    protected $with = ['user', 'room_category'];
+    protected $with = ['user', 'room_category', 'payment_method'];
 
     public function user()
     {
@@ -19,5 +19,10 @@ class Transaction extends Model
     public function room_category()
     {
         return $this->belongsTo(RoomCategory::class);
+    }
+
+    public function payment_method()
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 }
