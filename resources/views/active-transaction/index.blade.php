@@ -27,6 +27,8 @@
                 <div class="col">
                     <h5>Transaction Detail</h5>
                     <ul>
+                        <li class="fw-bold">Transaction Number</li>
+                        {{ $active_transaction->number }}
                         <li class="fw-bold">Booked by</li>
                         {{ $active_transaction->user->name }}
                         <li class="fw-bold">Guest count</li>
@@ -45,6 +47,9 @@
                             @else
                                 <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#paymentMethodModal"><i class="fas fa-dollar-sign"></i> Choose payment method</button>
                             @endif
+                        @elseif ($active_transaction->status == 'confirmation')
+                            <span class="badge bg-secondary">Waiting for payment confirmation</span>
+                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#payModal"><i class="fas fa-eye"></i></button>
                         @elseif ($active_transaction->status == 'canceled')
                             <span class="badge bg-danger">Canceled</span> <i class="fas fa-info-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Reason for canceled here."></i>
                         @elseif ($active_transaction->status == 'inactive')
@@ -103,7 +108,16 @@
                             <small class="text-muted">Notes : Please pay the amount that matches the bill. for overpayments the funds will be returned, it's just that it takes a long process.</small>
                             <div class="mt-3">
                                 <h6>Submit payment slip</h6>
-                                <input type="file" class="form-control">
+                                <form class="form-pay" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $active_transaction->id }}">
+                                    <input type="hidden" name="oldSlip" value="{{ $active_transaction->payment_slip }}">
+                                    <div class="d-flex">
+                                        <input type="file" class="form-control" name="payment_slip">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                    <small>Uploaded file : <a href="{{ asset('images/transactions-photo/' . $active_transaction->payment_slip) }}" target="_blank">{{ $active_transaction->payment_slip }}</a></small>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -132,6 +146,36 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Payment method selected successfully!',
+                            confirmButtonColor: '#4e73df'
+                        }).then(function() {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(res) {
+                        $.each(res.responseJSON.errors, function(id, error) {
+                            toastr['error'](error);
+                        });
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+
+            $('.form-pay').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('active-transaction.update-pay') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        $('#payModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Transaction paid successfully!',
                             confirmButtonColor: '#4e73df'
                         }).then(function() {
                             window.location.reload();

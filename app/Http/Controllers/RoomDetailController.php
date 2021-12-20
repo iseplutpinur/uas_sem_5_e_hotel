@@ -44,6 +44,8 @@ class RoomDetailController extends Controller
             'check_out.required' => 'Check out date is required.'
         ]);
 
+        $validatedData['number'] = 'INV-' . time();
+
         User::find($request->user_id)->update(['is_rent' => true]);
         Transaction::create($validatedData);
         return response()->json(['message' => 'Book success, please wait admin confirmation!']);

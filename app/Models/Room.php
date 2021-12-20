@@ -10,6 +10,9 @@ class Room extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $with = ['category'];
+    protected $casts = [
+        'is_available' => 'boolean'
+    ];
 
     public function category()
     {

@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('admin-content')
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Transaction Detail</h1>
+        <h1 class="h3 mb-4 text-gray-800">Transaction Detail : {{ $transaction->number }}</h1>
 
         <div class="card shadow">
             <div class="card-body">
@@ -39,18 +39,83 @@
                             <li class="font-weight-bold">Status</li>
                             <form class="form-status">
                                 @csrf
+                                <input type="hidden" name="user_id" value="{{ $transaction->user->id }}">
                                 <input type="hidden" name="id" value="{{ $transaction->id }}">
                                 <select class="form-control" name="status">
                                     <option value="">Select status</option>
                                     <option value="waiting" @if ($transaction->status == 'waiting') selected @endif>Waiting for confirmation</option>
                                     <option value="payment" @if ($transaction->status == 'payment') selected @endif>Waiting for payment</option>
+                                    <option value="confirmation" @if ($transaction->status == 'confirmation') selected @endif>Waiting for payment confirmation</option>
                                     <option value="canceled" @if ($transaction->status == 'canceled') selected @endif>Canceled</option>
                                     <option value="active" @if ($transaction->status == 'active') selected @endif>Active</option>
                                     <option value="inactive" @if ($transaction->status == 'inactive') selected @endif>Inactive / Ended</option>
                                 </select>
                             </form>
+                            @if ($transaction->status == 'confirmation')
+                                <a href="{{ asset('images/transactions-photo/' . $transaction->payment_slip) }}" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> Check payment slip</a>
+                            @endif
                         </ul>
                     </div>
+                </div>
+                <div align="right">
+                    <a href="{{ route('admin.transaction') }}" class="btn btn-secondary">Back</a>
+                </div>
+            </div>
+        </div>
+
+        @if ($transaction->status == 'active')
+            <div class="card shadow mt-3">
+                <div class="card-body">
+                    <h4>Room</h4>
+                    @if (!$transaction->room_id)
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#setRoomModal">Set active room for this transaction</button>
+                    @else
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Number</th>
+                                        <th>Floor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ $transaction->room->number }}</td>
+                                        <td>{{ $transaction->room->floor }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @endif
+    </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="setRoomModal" tabindex="-1" aria-labelledby="setRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="setRoomModalLabel">Room</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-room">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $transaction->id }}">
+                        <div class="form-group">
+                            <select class="form-control" name="room_id">
+                                <option value="">Select room</option>
+                                @foreach ($rooms as $room)
+                                    <option value="{{ $room->id }}">Number : {{ $room->number }} | Floor : {{ $room->floor }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -73,9 +138,40 @@
                     complete: function(e) {},
                     success: function(res) {
                         toastr['success']('Transaction status changed!');
+                        location.reload();
                     },
                     error: function(res) {
                         toastr['error']('Update failed, there is a problem with the server!');
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+
+            $('.form-room').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('admin.transaction.update-room') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        $('#setRoomModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Room selected successfully!',
+                            confirmButtonColor: '#4e73df'
+                        }).then(function() {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(res) {
+                        $.each(res.responseJSON.errors, function(id, error) {
+                            toastr['error'](error);
+                        });
                     },
                     cache: false,
                     contentType: false,

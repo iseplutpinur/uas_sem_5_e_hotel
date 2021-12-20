@@ -75,8 +75,8 @@
                 <div class="modal-body">
                     <form class="form-input">
                         @csrf
-                        <input type="text" name="user_id" value="{{ Auth::id() }}">
-                        <input type="text" name="room_category_id" value="{{ $room->id }}">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <input type="hidden" name="room_category_id" value="{{ $room->id }}">
                         <div class="mb-3">
                             <label class="form-label">Guest Count</label>
                             <input type="number" class="form-control" name="guest">

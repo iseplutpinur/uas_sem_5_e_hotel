@@ -62,11 +62,13 @@ class AdminRoomController extends Controller
         $validatedData = $request->validate([
             'room_category_id' => ['required'],
             'number' => ['required'],
-            'floor' => ['required']
+            'floor' => ['required'],
+            'is_available' => ['required']
         ], [
             'room_category_id.required' => 'Room category is required.',
             'number.required' => 'Room number is required.',
-            'floor.required' => 'Room floor is required.'
+            'floor.required' => 'Room floor is required.',
+            'is_available.required' => 'Room status is required.'
         ]);
 
         Room::find($request->id)->update($validatedData);

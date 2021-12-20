@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/active-transaction', [ActiveTransactionController::class, 'index'])->name('active-transaction');
     Route::post('/active-transaction/update-payment', [ActiveTransactionController::class, 'update_payment'])->name('active-transaction.update-payment');
+    Route::post('/active-transaction/update-pay', [ActiveTransactionController::class, 'update_pay'])->name('active-transaction.update-pay');
 
     Route::post('/detail/book', [RoomDetailController::class, 'book'])->name('detail.book');
 
@@ -129,6 +130,7 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::post('/admin/transaction', [AdminTransactionController::class, 'table']);
     Route::get('/admin/transaction/{id}', [AdminTransactionController::class, 'detail'])->name('admin.transaction.detail');
     Route::post('/admin/transaction/update-status', [AdminTransactionController::class, 'update_status'])->name('admin.transaction.update-status');
+    Route::post('/admin/transaction/update-room', [AdminTransactionController::class, 'update_room'])->name('admin.transaction.update-room');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [

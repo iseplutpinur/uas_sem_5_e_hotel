@@ -15,7 +15,7 @@
             @foreach ($transactions as $transaction)
                 <tr>
                     <td>{{ date('d F Y H:i', strtotime($transaction->created_at)) }}</td>
-                    <td></td>
+                    <td>{{ $transaction->number }}</td>
                     <td>{{ $transaction->user->name }}</td>
                     <td>{{ $transaction->room_category->name }}</td>
                     <td>{{ $transaction->guest }} Person</td>
@@ -28,6 +28,10 @@
                             <span class="badge badge-secondary">Inactive / Ended</span>
                         @elseif($transaction->status == 'active')
                             <span class="badge badge-success">Active</span>
+                        @elseif($transaction->status == 'payment')
+                            <span class="badge badge-primary">Waiting for payment</span>
+                        @elseif($transaction->status == 'confirmation')
+                            <span class="badge badge-secondary">Waiting for payment confirmation</span>
                         @endif
                     </td>
                     <td>

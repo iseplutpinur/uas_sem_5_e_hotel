@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminTransactionController extends Controller
@@ -24,9 +26,12 @@ class AdminTransactionController extends Controller
 
     public function detail($id)
     {
+        $room_category_id = Transaction::find($id)->room_category_id;
+
         return view('admin.transaction.detail', [
             'title' => 'Transaction Detail',
-            'transaction' => Transaction::find($id)
+            'transaction' => Transaction::find($id),
+            'rooms' => Room::where('room_category_id', $room_category_id)->where('is_available', false)->get()
         ]);
     }
 
@@ -36,6 +41,25 @@ class AdminTransactionController extends Controller
             'id' => ['required'],
             'status' => ['required']
         ]);
+
+        if (in_array($request->status, ['active', 'waiting', 'payment', 'confirmation'])) {
+            User::find($request->user_id)->update(['is_rent' => true]);
+        } elseif (in_array($request->status, ['inactive', 'canceled'])) {
+            User::find($request->user_id)->update(['is_rent' => false]);
+        }
+
+        Transaction::find($request->id)->update($validatedData);
+    }
+
+    public function update_room(Request $request)
+    {
+        $validatedData = $request->validate([
+            'room_id' => ['required']
+        ], [
+            'room_id.required' => 'Room is required.'
+        ]);
+
+        Room::find($request->id)->update(['is_available' => 1]);
         Transaction::find($request->id)->update($validatedData);
     }
 }

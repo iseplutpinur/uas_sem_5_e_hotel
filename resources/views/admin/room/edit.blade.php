@@ -26,6 +26,19 @@
                         <label>Room Floor</label>
                         <input type="text" class="form-control" name="floor" value="{{ $room->floor }}">
                     </div>
+                    <div class="form-group">
+                        <label>Room Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="is_available" value="0" @if (!$room->is_available) checked @endif>
+                            <label class="form-check-label">
+                                Available
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="is_available" value="1" @if ($room->is_available) checked @endif>
+                            <label class="form-check-label">Unavailable</label>
+                        </div>
+                    </div>
                     <div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ route('admin.room') }}" class="btn btn-secondary">Back</a>

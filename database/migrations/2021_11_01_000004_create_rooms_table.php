@@ -18,6 +18,7 @@ class CreateRoomsTable extends Migration
             $table->foreignId('room_category_id')->references('id')->on('room_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('number');
             $table->integer('floor');
+            $table->boolean('is_available')->default(false);
             $table->timestamps();
         });
     }
