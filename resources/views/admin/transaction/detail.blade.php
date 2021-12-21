@@ -70,6 +70,10 @@
                     @if (!$transaction->room_id)
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#setRoomModal">Set active room for this transaction</button>
                     @else
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateRoomModal">Change room</button>
+                            <button type="button" class="btn btn-sm btn-danger btn-endroom" data-id="{{ $transaction->room->id }}" data-transaction_id="{{ $transaction->id }}">End Room</button>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
@@ -116,6 +120,39 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Submit</button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateRoomModal" tabindex="-1" aria-labelledby="updateRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateRoomModalLabel">Change Room</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if ($transaction->room)
+                        <form class="form-change">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $transaction->id }}">
+                            <input type="hidden" name="oldRoom" value="{{ $transaction->room->id }}">
+                            <div class="form-group">
+                                <select class="form-control" name="room_id">
+                                    <option value="">Select room</option>
+                                    @foreach ($rooms as $room)
+                                        <option value="{{ $room->id }}">Number : {{ $room->number }} | Floor : {{ $room->floor }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </form>
+                    @else
+                        <p>No active room to change!</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -176,6 +213,60 @@
                     cache: false,
                     contentType: false,
                     processData: false
+                });
+            });
+
+            $('.form-change').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('admin.transaction.change-room') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        $('#setRoomModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Room changed successfully!',
+                            confirmButtonColor: '#4e73df'
+                        }).then(function() {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(res) {
+                        $.each(res.responseJSON.errors, function(id, error) {
+                            toastr['error'](error);
+                        });
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+
+            $('.btn-endroom').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var transaction_id = $(this).data('transaction_id');
+                var url = "{{ route('admin.transaction.end-room', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    url: url,
+                    method: "DELETE",
+                    data: {
+                        _token: $("meta[name='csrf-token']").attr("content"),
+                        transaction_id: transaction_id
+                    },
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        window.location.reload();
+                    },
+                    error: function(res) {
+                        toastr['error']('End room failed, there is a problem with the server!');
+                    }
                 });
             });
         </script>

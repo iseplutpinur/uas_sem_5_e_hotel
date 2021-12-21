@@ -59,7 +59,26 @@ class AdminTransactionController extends Controller
             'room_id.required' => 'Room is required.'
         ]);
 
-        Room::find($request->id)->update(['is_available' => 1]);
+        Room::find($request->room_id)->update(['is_available' => 1]);
         Transaction::find($request->id)->update($validatedData);
+    }
+
+    public function change_room(Request $request)
+    {
+        $validatedData = $request->validate([
+            'room_id' => ['required']
+        ], [
+            'room_id.required' => 'Room is required.'
+        ]);
+
+        Room::find($request->oldRoom)->update(['is_available' => 0]);
+        Room::find($request->room_id)->update(['is_available' => 1]);
+        Transaction::find($request->id)->update($validatedData);
+    }
+
+    public function end_room($id, Request $request)
+    {
+        Room::find($id)->update(['is_available' => 0]);
+        Transaction::find($request->transaction_id)->update(['room_id' => null]);
     }
 }

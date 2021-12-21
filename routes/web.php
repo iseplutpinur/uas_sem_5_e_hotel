@@ -131,6 +131,8 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::get('/admin/transaction/{id}', [AdminTransactionController::class, 'detail'])->name('admin.transaction.detail');
     Route::post('/admin/transaction/update-status', [AdminTransactionController::class, 'update_status'])->name('admin.transaction.update-status');
     Route::post('/admin/transaction/update-room', [AdminTransactionController::class, 'update_room'])->name('admin.transaction.update-room');
+    Route::post('/admin/transaction/change-room', [AdminTransactionController::class, 'change_room'])->name('admin.transaction.change-room');
+    Route::delete('/admin/transaction/end-room/{id}', [AdminTransactionController::class, 'end_room'])->name('admin.transaction.end-room');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [

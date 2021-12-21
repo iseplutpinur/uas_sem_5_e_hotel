@@ -23,6 +23,15 @@
                         <li class="fw-bold">Price</li>
                         Rp. {{ number_format($active_transaction->room_category->price) }} /Night
                     </ul>
+                    @if ($active_transaction->room)
+                        <h5>Room</h5>
+                        <ul>
+                            <li class="fw-bold">Number</li>
+                            {{ $active_transaction->room->number }}
+                            <li class="fw-bold">Floor</li>
+                            {{ $active_transaction->room->floor }}
+                        </ul>
+                    @endif
                 </div>
                 <div class="col">
                     <h5>Transaction Detail</h5>
