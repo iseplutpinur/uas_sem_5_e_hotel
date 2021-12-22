@@ -16,6 +16,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomDetailController;
+use App\Http\Controllers\TransactionHistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/active-transaction', [ActiveTransactionController::class, 'index'])->name('active-transaction');
     Route::post('/active-transaction/update-payment', [ActiveTransactionController::class, 'update_payment'])->name('active-transaction.update-payment');
     Route::post('/active-transaction/update-pay', [ActiveTransactionController::class, 'update_pay'])->name('active-transaction.update-pay');
+
+    Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction-history');
 
     Route::post('/detail/book', [RoomDetailController::class, 'book'])->name('detail.book');
 
