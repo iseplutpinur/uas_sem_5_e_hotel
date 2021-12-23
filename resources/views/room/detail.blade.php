@@ -8,14 +8,23 @@
         <div>
             <h4>Room Details</h4>
             <div class="row">
-                <div class="col-3">
-                    @if ($room->cover)
-                        <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}" class="border" style="object-fit: cover;max-width: 250px;width: 100%;">
-                    @else
-                        <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-width: 250px;width: 100%;">
-                    @endif
+                <div class="col-md-3">
+                    <div class="d-none d-md-block d-lg-block d-xl-block">
+                        @if ($room->cover)
+                            <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}" class="border" style="object-fit: cover;max-width: 250px;width: 100%;">
+                        @else
+                            <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-width: 250px;width: 100%;">
+                        @endif
+                    </div>
+                    <div class="d-md-none d-lg-none d-xl-none">
+                        @if ($room->cover)
+                            <img src="{{ asset('images/room_categories-photo/' . $room->cover) }}" class="border" style="object-fit: cover;width: 100%;">
+                        @else
+                            <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;width: 100%;">
+                        @endif
+                    </div>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6">
                     <h4>Facility</h4>
                     <ul>
                         @foreach ($facilities as $facility)
@@ -23,7 +32,7 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="col-3">
+                <div class="col-md-3">
                     <p class="mb-0">*start from</p>
                     <h4>Rp. {{ number_format($room->price) }} /Night</h4>
                     @auth

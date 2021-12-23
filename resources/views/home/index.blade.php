@@ -13,10 +13,11 @@
         </div>
     </div>
 
-    <div class="container my-5">
+    <div class="container my-3">
         <h2>e-hotel</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, ipsum. Ipsam, non expedita? Iure dolorem consequuntur blanditiis cupiditate dolore veniam deserunt nobis consequatur velit necessitatibus, ullam consectetur. Recusandae, eius consectetur.</p>
+        <p>e-hotel, salah satu hotel terbaik di Kota Batam yang dekat dengan pusat kota dan tempat berbelanja. Didukung dengan tempat spa lengkap, kolam renang, serta kamar super nyaman akan membuat liburan Anda semakin menyenangkan.</p>
 
+        <h4 class="text-center mt-5">Room</h4>
         <div class="row">
             @foreach ($room_categories as $room_category)
                 <div class="col-md-4">
@@ -44,9 +45,45 @@
                 </div>
             @endforeach
         </div>
-        <a href="#" class="text-decoration-none text-center">
-            <h5>Show more >></h5>
-        </a>
+
+        <h4 class="text-center mt-5 mb-3">Our Facility</h4>
+        <div class="d-none d-md-block d-lg-block d-xl-block">
+            <div class="swiper swiper-facility">
+                <div class="swiper-wrapper">
+                    @foreach ($facilities as $facility)
+                        <div class="swiper-slide">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <i class="{{ $facility->icon }} fa-2x"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <h5>{{ $facility->name }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="d-md-none d-lg-none d-xl-none">
+            <div class="swiper swiper-facility">
+                <div class="swiper-wrapper">
+                    @foreach ($facilities as $facility)
+                        <div class="swiper-slide">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <i class="{{ $facility->icon }} fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('scripts')
@@ -56,6 +93,16 @@
                 spaceBetween: 10,
                 autoplay: {
                     delay: 2500,
+                    disableOnInteraction: false,
+                }
+            });
+
+            var swiper = new Swiper(".swiper-facility", {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                freeMode: true,
+                autoplay: {
+                    delay: 2000,
                     disableOnInteraction: false,
                 }
             });

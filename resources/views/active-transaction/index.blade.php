@@ -6,14 +6,14 @@
 
         @if ($active_transaction)
             <div class="row mt-3">
-                <div class="col">
+                <div class="col-md-4">
                     @if ($active_transaction->room_category->cover)
                         <img src="{{ asset('images/room_categories-photo/' . $active_transaction->room_category->cover) }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
                     @else
                         <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-width: 350px;width: 100%;">
                     @endif
                 </div>
-                <div class="col">
+                <div class="col-md-4">
                     <h5>Room Detail</h5>
                     <ul>
                         <li class="fw-bold">Name</li>
@@ -33,7 +33,7 @@
                         </ul>
                     @endif
                 </div>
-                <div class="col">
+                <div class="col-md-4">
                     <h5>Transaction Detail</h5>
                     <ul>
                         <li class="fw-bold">Transaction Number</li>

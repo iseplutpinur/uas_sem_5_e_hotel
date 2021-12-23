@@ -9,11 +9,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-2">
-                            @if ($transaction->room_category->cover)
-                                <img src="{{ asset('images/room_categories-photo/' . $transaction->room_category->cover) }}" class="border" style="object-fit: cover;max-height: 100px; height: 100%;">
-                            @else
-                                <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-height: 100px; height: 100%;">
-                            @endif
+                            <div class="d-none d-md-block d-lg-block d-xl-block">
+                                @if ($transaction->room_category->cover)
+                                    <img src="{{ asset('images/room_categories-photo/' . $transaction->room_category->cover) }}" class="border" style="object-fit: cover;max-height: 100px; height: 100%;">
+                                @else
+                                    <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;max-height: 100px; height: 100%;">
+                                @endif
+                            </div>
+                            <div class="d-md-none d-lg-none d-xl-none">
+                                @if ($transaction->room_category->cover)
+                                    <img src="{{ asset('images/room_categories-photo/' . $transaction->room_category->cover) }}" class="border" style="object-fit: cover;width: 100%;">
+                                @else
+                                    <img src="{{ asset('images/default.png') }}" class="border" style="object-fit: cover;width: 100%;">
+                                @endif
+                            </div>
                         </div>
                         <div class="col-md-5">
                             <p class="m-0"><span class="fw-bold">Transaction number :</span> {{ $transaction->number }}</p>
