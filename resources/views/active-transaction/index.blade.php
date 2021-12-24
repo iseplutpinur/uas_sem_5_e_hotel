@@ -5,6 +5,12 @@
         <h3>Active Transaction</h3>
 
         @if ($active_transaction)
+            @php
+                $date_in = new DateTime($active_transaction->check_in);
+                $date_out = new DateTime($active_transaction->check_out);
+                $interval = $date_in->diff($date_out);
+                $days = $interval->format('%a');
+            @endphp
             <div class="row mt-3">
                 <div class="col-md-4">
                     @if ($active_transaction->room_category->cover)
@@ -22,6 +28,8 @@
                         {{ $active_transaction->room_category->description }}
                         <li class="fw-bold">Price</li>
                         Rp. {{ number_format($active_transaction->room_category->price) }} /Night
+                        <li class="fw-bold">Total Price</li>
+                        Rp. {{ number_format($days * $active_transaction->room_category->price) }}
                     </ul>
                     @if ($active_transaction->room)
                         <h5>Room</h5>
@@ -46,6 +54,8 @@
                         {{ date('d F Y', strtotime($active_transaction->check_in)) }}
                         <li class="fw-bold">Check out on</li>
                         {{ date('d F Y', strtotime($active_transaction->check_out)) }}
+                        <li class="fw-bold">Total days</li>
+                        {{ $days }} Days
                         <li class="fw-bold">Status</li>
                         @if ($active_transaction->status == 'waiting')
                             <span class="badge bg-warning">Waiting for confirmation</span>

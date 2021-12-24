@@ -12,7 +12,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{{ route('active-transaction') }}">Active Transaction</a></li>
                                 <li><a class="dropdown-item" href="{{ route('transaction-history') }}">Transaction History</a></li>
                                 <li>
@@ -45,7 +45,7 @@
                 <div class="dropdown dropup">
                     <a role="button" class="nav-link dropdown-toggle" id="dropdownMenuProfile" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-lg fa-user-circle"></i></a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuProfile">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
                         <li><a class="dropdown-item" href="{{ route('active-transaction') }}">Active Transaction</a></li>
                         <li><a class="dropdown-item" href="{{ route('transaction-history') }}">Transaction History</a></li>
                         <li>
