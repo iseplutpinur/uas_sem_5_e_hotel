@@ -10,15 +10,16 @@
                     <div class="card-body">
                         <div>
                             <center>
-                                <form class="form-photo">
+                                <form class="form-photo" enctype="multipart/form-data">
                                     @csrf
+                                    <input type="hidden" name="id" value="{{ $user->id }}">
                                     @if ($user->photo)
                                         <img src="{{ asset('images/users-photo/' . $user->photo) }}" style="width: 200px;height: 200px;;object-fit: cover;border-radius: 50%" class="border">
                                     @else
                                         <img src="{{ asset('images/default.png') }}" style="width: 200px;height: 200px;;object-fit: cover;border-radius: 50%" class="border">
                                     @endif
                                     <label class="btn btn-sm btn-secondary d-block mt-3" for="photo"><i class="fas fa-camera"></i> Change profile</label>
-                                    <input type="file" name="oldPhoto" class="d-none" value="{{ $user->photo }}">
+                                    <input type="hidden" name="oldPhoto" class="d-none" value="{{ $user->photo }}">
                                     <input type="file" id="photo" name="photo" class="d-none">
                                 </form>
                             </center>
@@ -68,4 +69,41 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script type="text/javascript">
+            $('input[name="photo"]').change(function() {
+                $('.form-photo').submit();
+            });
+
+            $('.form-photo').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('profile.update-photo') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: res.message,
+                            confirmButtonColor: '#409AC7'
+                        }).then(function() {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(res) {
+                        $.each(res.responseJSON.errors, function(id, error) {
+                            toastr['error'](error);
+                        });
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+        </script>
+    @endpush
 @endsection

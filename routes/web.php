@@ -19,6 +19,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomDetailController;
 use App\Http\Controllers\TransactionHistoryController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile/update-photo', [ProfileController::class, 'update_photo'])->name('profile.update-photo');
 
     Route::get('/active-transaction', [ActiveTransactionController::class, 'index'])->name('active-transaction');
     Route::post('/active-transaction/update-payment', [ActiveTransactionController::class, 'update_payment'])->name('active-transaction.update-payment');
