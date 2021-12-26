@@ -15,7 +15,7 @@ class CreateRatingsTable extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_category_id')->references('id')->on('room_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('transaction_id')->references('id')->on('transactions')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('star');
             $table->timestamps();
         });
