@@ -1,6 +1,12 @@
 @extends('admin.layout.template')
 @section('title', $title)
 @section('admin-content')
+    @php
+    $date_in = new DateTime($transaction->check_in);
+    $date_out = new DateTime($transaction->check_out);
+    $interval = $date_in->diff($date_out);
+    $days = $interval->format('%a');
+    @endphp
     <div class="container-fluid">
         <h1 class="h3 mb-4 text-gray-800">Transaction Detail : {{ $transaction->number }}</h1>
 
@@ -23,6 +29,8 @@
                             {!! $transaction->room_category->description !!}
                             <li class="font-weight-bold">Price</li>
                             Rp. {{ number_format($transaction->room_category->price) }} /Night
+                            <li class="font-weight-bold">Total price</li>
+                            Rp. {{ number_format($days * $transaction->room_category->price) }}
                         </ul>
                     </div>
                     <div class="col">
@@ -36,6 +44,8 @@
                             {{ date('d F Y', strtotime($transaction->check_in)) }}
                             <li class="font-weight-bold">Check out on</li>
                             {{ date('d F Y', strtotime($transaction->check_out)) }}
+                            <li class="font-weight-bold">Total days</li>
+                            {{ $days }} Days
                             <li class="font-weight-bold">Status</li>
                             <form class="form-status">
                                 @csrf

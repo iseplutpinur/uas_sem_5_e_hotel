@@ -123,7 +123,7 @@
                             <p class="m-0">Via : <span class="fw-bold">{{ $active_transaction->payment_method->name }}</span></p>
                             <p class="m-0">Account Number : <span class="fw-bold">{{ $active_transaction->payment_method->number }}</span></p>
                             <p>Account Owner : <span class="fw-bold">{{ $active_transaction->payment_method->owner }}</span></p>
-                            <p class="m-0">Invoice total : <span class="fw-bold">Rp. {{ number_format($active_transaction->room_category->price) }}</span></p>
+                            <p class="m-0">Invoice total : <span class="fw-bold">Rp. {{ number_format($days * $active_transaction->room_category->price) }}</span></p>
                             <small class="text-muted">Notes : Please pay the amount that matches the bill. for overpayments the funds will be returned, it's just that it takes a long process.</small>
                             <div class="mt-3">
                                 <h6>Submit payment slip</h6>

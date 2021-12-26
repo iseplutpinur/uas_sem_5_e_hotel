@@ -5,6 +5,12 @@
         <h3>Transaction History</h3>
 
         @foreach ($transactions as $transaction)
+            @php
+                $date_in = new DateTime($transaction->check_in);
+                $date_out = new DateTime($transaction->check_out);
+                $interval = $date_in->diff($date_out);
+                $days = $interval->format('%a');
+            @endphp
             <div class="card shadow">
                 <div class="card-body">
                     <div class="row">
@@ -29,10 +35,12 @@
                             <p class="m-0"><span class="fw-bold">Booking date :</span> {{ date('d F Y H:i', strtotime($transaction->created_at)) }}</p>
                             <p class="m-0"><span class="fw-bold">Check in :</span> {{ date('d F Y', strtotime($transaction->check_in)) }}</p>
                             <p class="m-0"><span class="fw-bold">Check out :</span> {{ date('d F Y', strtotime($transaction->check_out)) }}</p>
+                            <p class="m-0"><span class="fw-bold">Total days :</span> {{ $days }} Days</p>
                         </div>
                         <div class="col-md-5">
                             <p class="m-0"><span class="fw-bold">Room :</span> {{ $transaction->room_category->name }}</p>
                             <p class="m-0"><span class="fw-bold">Price :</span> Rp. {{ number_format($transaction->room_category->price) }}</p>
+                            <p class="m-0"><span class="fw-bold">Total Price:</span> Rp. {{ number_format($days * $transaction->room_category->price) }}</p>
                             <p class="m-0"><span class="fw-bold">Guest :</span> {{ $transaction->guest }}</p>
                             <p class="m-0"><span class="fw-bold">Status :</span>
                                 @if ($transaction->status == 'waiting')
