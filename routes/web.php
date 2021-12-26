@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/profile/update-photo', [ProfileController::class, 'update_photo'])->name('profile.update-photo');
+    Route::post('/profile/update-profile', [ProfileController::class, 'update_profile'])->name('profile.update-profile');
+    Route::post('/profile/update-password', [ProfileController::class, 'update_password'])->name('profile.update-password');
 
     Route::get('/active-transaction', [ActiveTransactionController::class, 'index'])->name('active-transaction');
     Route::post('/active-transaction/update-payment', [ActiveTransactionController::class, 'update_payment'])->name('active-transaction.update-payment');

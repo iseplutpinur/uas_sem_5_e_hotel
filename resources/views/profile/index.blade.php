@@ -32,6 +32,7 @@
                     <div class="card-body">
                         <form class="form-profile">
                             @csrf
+                            <input type="hidden" name="id" value="{{ $user->id }}">
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
                                 <input type="text" class="form-control" name="name" value="{{ $user->name }}">
@@ -50,17 +51,18 @@
                     <div class="card-body">
                         <form class="form-password">
                             @csrf
+                            <input type="hidden" name="id" value="{{ $user->id }}">
                             <div class="mb-3">
                                 <label class="form-label">Old password</label>
-                                <input type="text" class="form-control" name="name">
+                                <input type="password" class="form-control" name="old_password">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">New password</label>
-                                <input type="text" class="form-control" name="username">
+                                <input type="password" class="form-control" name="password">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Confirm new password</label>
-                                <input type="email" class="form-control" name="email">
+                                <input type="password" class="form-control" name="confirm_password">
                             </div>
                             <button type="submit" class="btn btn-sm btn-success float-end">Change password</button>
                         </form>
@@ -93,6 +95,72 @@
                         }).then(function() {
                             window.location.reload();
                         });
+                    },
+                    error: function(res) {
+                        $.each(res.responseJSON.errors, function(id, error) {
+                            toastr['error'](error);
+                        });
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+
+            $('.form-profile').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('profile.update-profile') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: res.message,
+                            confirmButtonColor: '#409AC7'
+                        }).then(function() {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(res) {
+                        $.each(res.responseJSON.errors, function(id, error) {
+                            toastr['error'](error);
+                        });
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+
+            $('.form-password').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('profile.update-password') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function(e) {},
+                    complete: function(e) {},
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Password changed successfully!',
+                                confirmButtonColor: '#409AC7'
+                            }).then(function() {
+                                window.location.reload();
+                            });
+                        } else if (res.status == 'fail') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Old password is invalid.',
+                                confirmButtonColor: '#409AC7'
+                            });
+                        }
                     },
                     error: function(res) {
                         $.each(res.responseJSON.errors, function(id, error) {
