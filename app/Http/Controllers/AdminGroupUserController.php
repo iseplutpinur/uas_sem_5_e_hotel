@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GroupUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
@@ -11,9 +12,13 @@ class AdminGroupUserController extends Controller
 {
     public function index()
     {
-        return view('admin.group-user-admin.index', [
-            'title' => 'Group User Admin'
-        ]);
+        if (Gate::allows('2_1')) {
+            return view('admin.group-user-admin.index', [
+                'title' => 'Group User Admin'
+            ]);
+        } else {
+            return redirect()->route('admin.error-401');
+        }
     }
 
     public function table()

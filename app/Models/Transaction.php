@@ -10,6 +10,9 @@ class Transaction extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $with = ['user', 'room_category', 'room', 'payment_method'];
+    protected $casts = [
+        'is_rated' => 'boolean'
+    ];
 
     public function user()
     {

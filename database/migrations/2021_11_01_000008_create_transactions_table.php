@@ -25,6 +25,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('guest');
             $table->enum('status', ['active', 'inactive', 'canceled', 'waiting', 'payment', 'confirmation'])->default('waiting');
             $table->string('payment_slip')->nullable();
+            $table->boolean('is_rated')->default(false);
             $table->timestamps();
         });
     }

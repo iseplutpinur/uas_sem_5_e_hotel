@@ -30,7 +30,11 @@ class AdminAuthorizationSettingController extends Controller
             '1_1' => $request->has('dashboard_1'),
             '1_2' => $request->has('dashboard_2'),
             '1_3' => $request->has('dashboard_3'),
-            '1_4' => $request->has('dashboard_4')
+            '1_4' => $request->has('dashboard_4'),
+            '2_1' => $request->has('groupuseradmin_1'),
+            '2_2' => $request->has('groupuseradmin_2'),
+            '2_3' => $request->has('groupuseradmin_3'),
+            '2_4' => $request->has('groupuseradmin_4')
         ];
         GroupUser::find($request->group)->update($validatedData);
         return response()->json(['message' => 'Data updated successfully!']);

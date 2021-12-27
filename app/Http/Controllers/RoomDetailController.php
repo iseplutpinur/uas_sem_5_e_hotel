@@ -27,7 +27,7 @@ class RoomDetailController extends Controller
 
     public function book(Request $request)
     {
-        $maxGuest = RoomCategory::find($request->room_category_id)->value('guest');
+        $maxGuest = RoomCategory::find($request->room_category_id)->guest;
 
         $validatedData = $request->validate([
             'user_id' => ['required'],

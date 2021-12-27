@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminFacilityController;
 use App\Http\Controllers\AdminGroupUserController;
 use App\Http\Controllers\AdminPaymentMethodController;
+use App\Http\Controllers\AdminRatingController;
 use App\Http\Controllers\AdminRoomCategoryController;
 use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminTransactionController;
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/active-transaction/update-pay', [ActiveTransactionController::class, 'update_pay'])->name('active-transaction.update-pay');
 
     Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction-history');
+    Route::post('/transaction-history/rating', [TransactionHistoryController::class, 'rating'])->name('transaction-history.rating');
 
     Route::post('/detail/book', [RoomDetailController::class, 'book'])->name('detail.book');
 
@@ -143,6 +145,10 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::post('/admin/transaction/update-room', [AdminTransactionController::class, 'update_room'])->name('admin.transaction.update-room');
     Route::post('/admin/transaction/change-room', [AdminTransactionController::class, 'change_room'])->name('admin.transaction.change-room');
     Route::delete('/admin/transaction/end-room/{id}', [AdminTransactionController::class, 'end_room'])->name('admin.transaction.end-room');
+
+    Route::get('/admin/rating', [AdminRatingController::class, 'index'])->name('admin.rating');
+    Route::post('/admin/rating', [AdminRatingController::class, 'table']);
+    Route::delete('/admin/rating/delete/{id}', [AdminRatingController::class, 'delete'])->name('admin.rating.delete');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [

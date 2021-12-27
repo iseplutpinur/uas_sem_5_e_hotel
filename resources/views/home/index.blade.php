@@ -34,7 +34,7 @@
                             <div class="card-body">
                                 <div class="text-end">
                                     <i class="fas fa-star" style="color: #ffc800;"></i>
-                                    <span class="text-muted">0.0</span>
+                                    <span class="text-muted">{{ round($room_category->rating->avg('star'), 1) }}</span>
                                 </div>
                                 <p class="mb-0 text-dark small">*start from</p>
                                 <h5 class="mb-0">Rp. {{ number_format($room_category->price) }} /Night</h5>

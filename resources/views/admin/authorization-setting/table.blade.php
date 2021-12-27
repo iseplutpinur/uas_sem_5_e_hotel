@@ -30,6 +30,24 @@
                         <input class="check" data-menu="1" id="check_1_4" type="checkbox" name="dashboard_4" value="1" @if ($group->{'1_4'}) checked @endif>
                     </td>
                 </tr>
+                <tr>
+                    <td>Group User Admin</td>
+                    <td>
+                        <input type="checkbox" class="check-all" id="check_2" data-id="2">
+                    </td>
+                    <td>
+                        <input class="check" data-menu="2" id="check_2_1" type="checkbox" name="groupuseradmin_1" value="1" @if ($group->{'2_1'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="2" id="check_2_2" type="checkbox" name="groupuseradmin_2" value="1" @if ($group->{'2_2'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="2" id="check_2_3" type="checkbox" name="groupuseradmin_3" value="1" @if ($group->{'2_3'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="2" id="check_2_4" type="checkbox" name="groupuseradmin_4" value="1" @if ($group->{'2_4'}) checked @endif>
+                    </td>
+                </tr>
             @else
                 <tr>
                     <td colspan="6">No data found.</td>
