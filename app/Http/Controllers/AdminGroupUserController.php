@@ -31,48 +31,68 @@ class AdminGroupUserController extends Controller
 
     public function add()
     {
-        return view('admin.group-user-admin.add', [
-            'title' => 'Add Group User Admin'
-        ]);
+        if (Gate::allows('2_2')) {
+            return view('admin.group-user-admin.add', [
+                'title' => 'Add Group User Admin'
+            ]);
+        } else {
+            return redirect()->route('admin.error-401');
+        }
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', 'unique:group_users']
-        ], [
-            'name.required' => 'Name is required.',
-            'name.unique' => 'Name is already used, please use a different name.'
-        ]);
+        if (Gate::allows('2_2')) {
+            $validatedData = $request->validate([
+                'name' => ['required', 'unique:group_users']
+            ], [
+                'name.required' => 'Name is required.',
+                'name.unique' => 'Name is already used, please use a different name.'
+            ]);
 
-        GroupUser::create($validatedData);
-        return response()->json(['message' => 'Data saved successfully!']);
+            GroupUser::create($validatedData);
+            return response()->json(['message' => 'Data saved successfully!']);
+        } else {
+            return redirect()->route('admin.error-401');
+        }
     }
 
     public function edit($id)
     {
-        return view('admin.group-user-admin.edit', [
-            'title' => 'Edit Group User Admin',
-            'group' => GroupUser::find($id)
-        ]);
+        if (Gate::allows('2_3')) {
+            return view('admin.group-user-admin.edit', [
+                'title' => 'Edit Group User Admin',
+                'group' => GroupUser::find($id)
+            ]);
+        } else {
+            return redirect()->route('admin.error-401');
+        }
     }
 
     public function update(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', Rule::unique('group_users')->ignore($request->id)]
-        ], [
-            'name.required' => 'Name is required.',
-            'name.unique' => 'Name is already used, please use a different name.'
-        ]);
+        if (Gate::allows('2_3')) {
+            $validatedData = $request->validate([
+                'name' => ['required', Rule::unique('group_users')->ignore($request->id)]
+            ], [
+                'name.required' => 'Name is required.',
+                'name.unique' => 'Name is already used, please use a different name.'
+            ]);
 
-        GroupUser::find($request->id)->update($validatedData);
-        return response()->json(['message' => 'Data updated successfully!']);
+            GroupUser::find($request->id)->update($validatedData);
+            return response()->json(['message' => 'Data updated successfully!']);
+        } else {
+            return redirect()->route('admin.error-401');
+        }
     }
 
     public function delete($id)
     {
-        GroupUser::destroy($id);
-        return response()->json(['message' => 'Data deleted successfully!']);
+        if (Gate::allows('2_4')) {
+            GroupUser::destroy($id);
+            return response()->json(['message' => 'Data deleted successfully!']);
+        } else {
+            return redirect()->route('admin.error-401');
+        }
     }
 }
