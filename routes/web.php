@@ -9,10 +9,12 @@ use App\Http\Controllers\AdminFacilityController;
 use App\Http\Controllers\AdminGroupUserController;
 use App\Http\Controllers\AdminPaymentMethodController;
 use App\Http\Controllers\AdminRatingController;
+use App\Http\Controllers\AdminResetPasswordController;
 use App\Http\Controllers\AdminRoomCategoryController;
 use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminTransactionController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\HomeController;
@@ -149,6 +151,12 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::get('/admin/rating', [AdminRatingController::class, 'index'])->name('admin.rating');
     Route::post('/admin/rating', [AdminRatingController::class, 'table']);
     Route::delete('/admin/rating/delete/{id}', [AdminRatingController::class, 'delete'])->name('admin.rating.delete');
+
+    Route::get('/admin/user', [AdminUsersController::class, 'index'])->name('admin.user');
+    Route::post('/admin/user', [AdminUsersController::class, 'table']);
+    Route::delete('/admin/user/delete/{id}', [AdminUsersController::class, 'delete'])->name('admin.user.delete');
+
+    Route::get('/admin/reset-password', [AdminResetPasswordController::class, 'index'])->name('admin.reset-password');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [

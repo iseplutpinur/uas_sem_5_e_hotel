@@ -82,7 +82,7 @@
         </div>
     </li>
     <!-- transaction -->
-    <li class="nav-item {{ Request::is('admin/payment-method*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('admin/payment-method*', 'admin/transaction*', 'admin/rating*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true" aria-controls="collapseTransaction">
             <i class="fas fa-fw fa-dollar-sign"></i>
             <span>Transaction</span>
@@ -92,6 +92,19 @@
                 <a class="collapse-item {{ Request::is('admin/payment-method*') ? 'active' : '' }}" href="{{ route('admin.payment-method') }}"><i class="fas fa-wallet mr-2"></i>Payment Method</a>
                 <a class="collapse-item {{ Request::is('admin/transaction*') ? 'active' : '' }}" href="{{ route('admin.transaction') }}"><i class="fas fa-file-invoice-dollar mr-2"></i>Transaction</a>
                 <a class="collapse-item {{ Request::is('admin/rating*') ? 'active' : '' }}" href="{{ route('admin.rating') }}"><i class="fas fa-star mr-2"></i>Rating</a>
+            </div>
+        </div>
+    </li>
+    <!-- user -->
+    <li class="nav-item {{ Request::is('admin/user*', 'admin/reset-password*') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
+            <i class="fas fa-fw fa-users"></i>
+            <span>User</span>
+        </a>
+        <div id="collapseUser" class="collapse {{ Request::is('admin/user*', 'admin/reset-password*') ? 'show' : '' }}" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::is('admin/user*') ? 'active' : '' }}" href="{{ route('admin.user') }}"><i class="fas fa-user mr-2"></i>User</a>
+                <a class="collapse-item {{ Request::is('admin/reset-password*') ? 'active' : '' }}" href="{{ route('admin.reset-password') }}"><i class="fas fa-user-cog mr-2"></i>Reset Password</a>
             </div>
         </div>
     </li>
