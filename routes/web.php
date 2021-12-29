@@ -17,6 +17,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CheckController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomDetailController;
@@ -42,6 +43,9 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
     Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'store']);
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

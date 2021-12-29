@@ -51,7 +51,7 @@
                                 <small>Not registered? <a role="button" class="register-href text-decoration-none">Create an account</a></small>
                             </div>
                             <div class="col-6 text-end">
-                                <small><a href="#" class="text-decoration-none">Forgot password</a></small>
+                                <small><a href="{{ route('forgot-password') }}" class="text-decoration-none">Forgot password</a></small>
                             </div>
                         </div>
                     </form>
