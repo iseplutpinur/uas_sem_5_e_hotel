@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Facility;
 use App\Models\PaymentMethod;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -12,10 +13,17 @@ class ActiveTransactionController extends Controller
 {
     public function index()
     {
+        $facility_id = Transaction::where('user_id', Auth::id())->whereIn('status', ['active', 'waiting', 'payment', 'confirmation'])->value('facility_id');
+        if ($facility_id) {
+            $facilities = Facility::whereIn('id', $facility_id)->get();
+        } else {
+            $facilities = [];
+        }
         return view('active-transaction.index', [
             'title' => 'Active Transaction',
             'active_transaction' => Transaction::where('user_id', Auth::id())->whereIn('status', ['active', 'waiting', 'payment', 'confirmation'])->first(),
-            'payment_methods' => PaymentMethod::all()
+            'payment_methods' => PaymentMethod::all(),
+            'facilities' => $facilities
         ]);
     }
 

@@ -53,7 +53,15 @@ class GroupUser extends Model
         '11_1' => 'boolean',
         '11_2' => 'boolean',
         '11_3' => 'boolean',
-        '11_4' => 'boolean'
+        '11_4' => 'boolean',
+        '12_1' => 'boolean',
+        '12_2' => 'boolean',
+        '12_3' => 'boolean',
+        '12_4' => 'boolean',
+        '13_1' => 'boolean',
+        '13_2' => 'boolean',
+        '13_3' => 'boolean',
+        '13_4' => 'boolean'
     ];
 
     public function scopeFilter($query, array $filters)

@@ -8,7 +8,7 @@
         <form class="form-forgot">
             @csrf
             <div class="input-group">
-                <input type="email" class="form-control" placeholder="Email">
+                <input type="email" class="form-control" placeholder="Email" name="email">
                 <button class="btn btn-secondary" type="submit">Submit</button>
             </div>
         </form>
@@ -26,7 +26,23 @@
                     beforeSend: function(e) {},
                     complete: function(e) {},
                     success: function(res) {
-                        alert('berhasil')
+                        if (res.status == 'fail') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Email is not registered yet!',
+                                confirmButtonColor: '#4e73df'
+                            }).then(function() {
+                                $('.form-forgot')[0].reset();
+                            });
+                        } else if (res.status == 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Reset password link will sent to your email!',
+                                confirmButtonColor: '#4e73df'
+                            }).then(function() {
+                                $('.form-forgot')[0].reset();
+                            });
+                        }
                     },
                     error: function(res) {
                         $.each(res.responseJSON.errors, function(id, error) {

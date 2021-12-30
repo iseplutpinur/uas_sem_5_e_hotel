@@ -21,7 +21,8 @@ class RoomDetailController extends Controller
         return view('room.detail', [
             'title' => 'Room Detail',
             'room' => $room_category,
-            'facilities' => $facilities
+            'facilities' => $facilities,
+            'addons' => Facility::where('is_addon', true)->get()
         ]);
     }
 
@@ -45,6 +46,7 @@ class RoomDetailController extends Controller
         ]);
 
         $validatedData['number'] = 'INV-' . time();
+        $validatedData['facility_id'] = $request->facility;
 
         User::find($request->user_id)->update(['is_rent' => true]);
         Transaction::create($validatedData);

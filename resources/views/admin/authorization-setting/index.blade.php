@@ -44,7 +44,7 @@
                     complete: function(e) {},
                     success: function(res) {
                         $('#table-data').html(res);
-                        for (let x = 1; x <= 11; x++) {
+                        for (let x = 1; x <= 13; x++) {
                             checkChecked(x)
                         };
                     },

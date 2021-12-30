@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Facility;
 use App\Models\Rating;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -14,6 +15,21 @@ class TransactionHistoryController extends Controller
         return view('transaction-history.index', [
             'title' => 'Transaction History',
             'transactions' => Transaction::where('user_id', Auth::id())->latest()->get()
+        ]);
+    }
+
+    public function detail(Transaction $transaction_history)
+    {
+        $facility_id = $transaction_history->value('facility_id');
+        if ($facility_id) {
+            $facilities = Facility::whereIn('id', $facility_id)->get();
+        } else {
+            $facilities = [];
+        }
+        return view('transaction-history.detail', [
+            'title' => 'Transaction History',
+            'transaction' => $transaction_history,
+            'facilities' => $facilities
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Facility;
 use App\Models\Room;
 use App\Models\Transaction;
 use App\Models\User;
@@ -32,11 +33,18 @@ class AdminTransactionController extends Controller
     public function detail($id)
     {
         $room_category_id = Transaction::find($id)->room_category_id;
+        $facility_id = Transaction::where('id', $id)->value('facility_id');
+        if ($facility_id) {
+            $facilities = Facility::whereIn('id', $facility_id)->get();
+        } else {
+            $facilities = [];
+        }
 
         return view('admin.transaction.detail', [
             'title' => 'Transaction Detail',
             'transaction' => Transaction::find($id),
-            'rooms' => Room::where('room_category_id', $room_category_id)->where('is_available', false)->get()
+            'rooms' => Room::where('room_category_id', $room_category_id)->where('is_available', false)->get(),
+            'facilities' => $facilities
         ]);
     }
 

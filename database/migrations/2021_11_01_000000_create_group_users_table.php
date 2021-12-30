@@ -60,6 +60,14 @@ class CreateGroupUsersTable extends Migration
             $table->boolean('11_2')->default(false);
             $table->boolean('11_3')->default(false);
             $table->boolean('11_4')->default(false);
+            $table->boolean('12_1')->default(false);
+            $table->boolean('12_2')->default(false);
+            $table->boolean('12_3')->default(false);
+            $table->boolean('12_4')->default(false);
+            $table->boolean('13_1')->default(false);
+            $table->boolean('13_2')->default(false);
+            $table->boolean('13_3')->default(false);
+            $table->boolean('13_4')->default(false);
             $table->timestamps();
         });
     }

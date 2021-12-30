@@ -22,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'token',
         'photo',
         'is_admin',
         'is_rent',

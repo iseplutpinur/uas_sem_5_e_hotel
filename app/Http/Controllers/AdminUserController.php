@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class AdminUserController extends Controller
 {
@@ -76,6 +77,7 @@ class AdminUserController extends Controller
             }
 
             $validatedData['password'] = Hash::make($validatedData['password']);
+            $validatedData['token'] = Str::random(64);
             $validatedData['is_admin'] = 1;
             User::create($validatedData);
             return response()->json(['message' => 'Data saved successfully!']);

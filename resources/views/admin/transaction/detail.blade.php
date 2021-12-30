@@ -2,6 +2,10 @@
 @section('title', $title)
 @section('admin-content')
     @php
+    $facility_price = 0;
+    foreach ($facilities as $facility) {
+        $facility_price += $facility->price;
+    }
     $date_in = new DateTime($transaction->check_in);
     $date_out = new DateTime($transaction->check_out);
     $interval = $date_in->diff($date_out);
@@ -30,8 +34,18 @@
                             <li class="font-weight-bold">Price</li>
                             Rp. {{ number_format($transaction->room_category->price) }} /Night
                             <li class="font-weight-bold">Total price</li>
-                            Rp. {{ number_format($days * $transaction->room_category->price) }}
+                            Rp. {{ number_format($days * $transaction->room_category->price + $facility_price) }}
                         </ul>
+                        @if ($facilities)
+                            <div class="mb-3">
+                                <label class="form-label">Addon Facility</label>
+                                <ul>
+                                    @foreach ($facilities as $facility)
+                                        <li><i class="{{ $facility->icon }}"></i> {{ $facility->name }} (Rp. {{ number_format($facility->price) }})</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                     <div class="col">
                         <h5>Transaction Detail</h5>

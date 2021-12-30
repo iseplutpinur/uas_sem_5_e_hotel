@@ -76,7 +76,15 @@ class AdminAuthorizationSettingController extends Controller
                 '11_1' => $request->has('rating_1'),
                 '11_2' => $request->has('rating_2'),
                 '11_3' => $request->has('rating_3'),
-                '11_4' => $request->has('rating_4')
+                '11_4' => $request->has('rating_4'),
+                '12_1' => $request->has('user_1'),
+                '12_2' => $request->has('user_2'),
+                '12_3' => $request->has('user_3'),
+                '12_4' => $request->has('user_4'),
+                '13_1' => $request->has('resetpassword_1'),
+                '13_2' => $request->has('resetpassword_2'),
+                '13_3' => $request->has('resetpassword_3'),
+                '13_4' => $request->has('resetpassword_4')
             ];
             GroupUser::find($request->group)->update($validatedData);
             return response()->json(['message' => 'Data updated successfully!']);

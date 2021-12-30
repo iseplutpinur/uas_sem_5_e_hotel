@@ -210,6 +210,42 @@
                         <input class="check" data-menu="11" id="check_11_4" type="checkbox" name="rating_4" value="1" @if ($group->{'11_4'}) checked @endif>
                     </td>
                 </tr>
+                <tr>
+                    <td>User</td>
+                    <td>
+                        <input type="checkbox" class="check-all" id="check_12" data-id="12">
+                    </td>
+                    <td>
+                        <input class="check" data-menu="12" id="check_12_1" type="checkbox" name="user_1" value="1" @if ($group->{'12_1'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="12" id="check_12_2" type="checkbox" name="user_2" value="1" @if ($group->{'12_2'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="12" id="check_12_3" type="checkbox" name="user_3" value="1" @if ($group->{'12_3'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="12" id="check_12_4" type="checkbox" name="user_4" value="1" @if ($group->{'12_4'}) checked @endif>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Reset Password</td>
+                    <td>
+                        <input type="checkbox" class="check-all" id="check_13" data-id="13">
+                    </td>
+                    <td>
+                        <input class="check" data-menu="13" id="check_13_1" type="checkbox" name="resetpassword_1" value="1" @if ($group->{'13_1'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="13" id="check_13_2" type="checkbox" name="resetpassword_2" value="1" @if ($group->{'13_2'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="13" id="check_13_3" type="checkbox" name="resetpassword_3" value="1" @if ($group->{'13_3'}) checked @endif>
+                    </td>
+                    <td>
+                        <input class="check" data-menu="13" id="check_13_4" type="checkbox" name="resetpassword_4" value="1" @if ($group->{'13_4'}) checked @endif>
+                    </td>
+                </tr>
             @else
                 <tr>
                     <td colspan="6">No data found.</td>

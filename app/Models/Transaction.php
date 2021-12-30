@@ -9,9 +9,10 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    protected $with = ['user', 'room_category', 'room', 'payment_method'];
+    protected $with = ['user', 'room_category', 'room', 'payment_method', 'facility'];
     protected $casts = [
-        'is_rated' => 'boolean'
+        'is_rated' => 'boolean',
+        'facility_id' => 'array'
     ];
 
     public function user()
@@ -32,5 +33,10 @@ class Transaction extends Model
     public function payment_method()
     {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    public function facility()
+    {
+        return $this->hasMany(Facility::class, 'id');
     }
 }

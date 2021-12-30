@@ -6,6 +6,10 @@
 
         @if ($active_transaction)
             @php
+                $addon_price = 0;
+                foreach ($facilities as $facility) {
+                    $addon_price += $facility->price;
+                }
                 $date_in = new DateTime($active_transaction->check_in);
                 $date_out = new DateTime($active_transaction->check_out);
                 $interval = $date_in->diff($date_out);
@@ -29,8 +33,16 @@
                         <li class="fw-bold">Price</li>
                         Rp. {{ number_format($active_transaction->room_category->price) }} /Night
                         <li class="fw-bold">Total Price</li>
-                        Rp. {{ number_format($days * $active_transaction->room_category->price) }}
+                        Rp. {{ number_format($days * $active_transaction->room_category->price + $addon_price) }}
                     </ul>
+                    @if ($facilities)
+                        <h5>Addon Facility</h5>
+                        <ul>
+                            @foreach ($facilities as $item)
+                                <li><i class="{{ $item->icon }}"></i> {{ $item->name }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                     @if ($active_transaction->room)
                         <h5>Room</h5>
                         <ul>
@@ -123,7 +135,7 @@
                             <p class="m-0">Via : <span class="fw-bold">{{ $active_transaction->payment_method->name }}</span></p>
                             <p class="m-0">Account Number : <span class="fw-bold">{{ $active_transaction->payment_method->number }}</span></p>
                             <p>Account Owner : <span class="fw-bold">{{ $active_transaction->payment_method->owner }}</span></p>
-                            <p class="m-0">Invoice total : <span class="fw-bold">Rp. {{ number_format($days * $active_transaction->room_category->price) }}</span></p>
+                            <p class="m-0">Invoice total : <span class="fw-bold">Rp. {{ number_format($days * $active_transaction->room_category->price + $addon_price) }}</span></p>
                             <small class="text-muted">Notes : Please pay the amount that matches the bill. for overpayments the funds will be returned, it's just that it takes a long process.</small>
                             <div class="mt-3">
                                 <h6>Submit payment slip</h6>

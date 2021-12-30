@@ -172,5 +172,31 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('11_4', function (User $user) {
             return $user->group->{'11_4'} === true;
         });
+
+        Gate::define('12_1', function (User $user) {
+            return $user->group->{'12_1'} === true;
+        });
+        Gate::define('12_2', function (User $user) {
+            return $user->group->{'12_2'} === true;
+        });
+        Gate::define('12_3', function (User $user) {
+            return $user->group->{'12_3'} === true;
+        });
+        Gate::define('12_4', function (User $user) {
+            return $user->group->{'12_4'} === true;
+        });
+
+        Gate::define('13_1', function (User $user) {
+            return $user->group->{'13_1'} === true;
+        });
+        Gate::define('13_2', function (User $user) {
+            return $user->group->{'13_2'} === true;
+        });
+        Gate::define('13_3', function (User $user) {
+            return $user->group->{'13_3'} === true;
+        });
+        Gate::define('13_4', function (User $user) {
+            return $user->group->{'13_4'} === true;
+        });
     }
 }

@@ -98,6 +98,19 @@
                             <label class="form-label">Check out</label>
                             <input type="date" class="form-control" name="check_out">
                         </div>
+                        @if ($addons)
+                            <div class="mb-3">
+                                <label class="form-label">Addon Facility</label>
+                                @foreach ($addons as $addon)
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="addonCheck" name="facility[]" value="{{ $addon->id }}">
+                                            <label class="form-check-label" for="addonCheck"><i class="{{ $addon->icon }}"></i> {{ $addon->name }} (Rp. {{ number_format($addon->price) }})</label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                         <button type="submit" class="btn btn-success w-100">Book</button>
                     </form>
                 </div>

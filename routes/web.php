@@ -22,6 +22,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomDetailController;
 use App\Http\Controllers\TransactionHistoryController;
+use App\Models\ForgotPassword;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -46,6 +47,9 @@ Route::middleware(['guest'])->group(function () {
 
     Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
     Route::post('/forgot-password', [ForgotPasswordController::class, 'store']);
+
+    Route::get('/reset-password', [ForgotPasswordController::class, 'reset'])->name('reset-password');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'update']);
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -60,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/active-transaction/update-pay', [ActiveTransactionController::class, 'update_pay'])->name('active-transaction.update-pay');
 
     Route::get('/transaction-history', [TransactionHistoryController::class, 'index'])->name('transaction-history');
+    Route::get('/transaction-history/{transaction_history:number}', [TransactionHistoryController::class, 'detail'])->name('transaction-history.detail');
     Route::post('/transaction-history/rating', [TransactionHistoryController::class, 'rating'])->name('transaction-history.rating');
 
     Route::post('/detail/book', [RoomDetailController::class, 'book'])->name('detail.book');
@@ -161,6 +166,8 @@ Route::middleware(['admin.auth', 'can:isAdmin'])->group(function () {
     Route::delete('/admin/user/delete/{id}', [AdminUsersController::class, 'delete'])->name('admin.user.delete');
 
     Route::get('/admin/reset-password', [AdminResetPasswordController::class, 'index'])->name('admin.reset-password');
+    Route::post('/admin/reset-password', [AdminResetPasswordController::class, 'table']);
+    Route::post('/admin/reset-password/check/{id}', [AdminResetPasswordController::class, 'check'])->name('admin.reset-password.check');
 
     Route::get('/admin/error-401', function () {
         return view('admin.error-401', [
